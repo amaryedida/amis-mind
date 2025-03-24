@@ -48,11 +48,11 @@
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script> <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
   <script>
     // Replace with your own Firebase config from Step 2
-    firebaseConfig = {
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
   apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
   authDomain: "amis-s-mind.firebaseapp.com",
   databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
@@ -62,9 +62,9 @@
   appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
   measurementId: "G-EZFTKMB4Z6"
 };
-  // Initialize Firebase
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    const db = firebase.firestore(); // Initialize Firestore instead of Realtime Database
     const storage = firebase.storage();
 
     // Handle form submission
@@ -78,22 +78,22 @@
         const storageRef = storage.ref('screenshots/' + screenshotFile.name);
         storageRef.put(screenshotFile).then((snapshot) => {
           snapshot.ref.getDownloadURL().then((downloadURL) => {
-            const newItemRef = database.ref('mind_items').push();
-            newItemRef.set({
+            // Use Firestore to add data
+            db.collection('mind_items').add({ // Use db.collection(...).add(...) for Firestore
               screenshotURL: downloadURL,
               notes: notes,
               ideas: ideas,
-              timestamp: Date.now()
+              timestamp: firebase.firestore.FieldValue.serverTimestamp() // Use Firestore timestamp
             }).then(() => {
-              alert('Saved successfully!');
+              alert('Saved successfully to Firestore!'); // Updated alert message
               this.reset();
-            }).catch(error => alert('Error: ' + error.message));
+            }).catch(error => alert('Error saving to Firestore: ' + error.message)); // Updated error message
           });
         });
       } else {
         alert('Please upload a screenshot.');
       }
     });
-  </script>
+  </script>  
 </body>
 </html>
