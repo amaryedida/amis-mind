@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ami's Mind</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f5f5f7;
+    }
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+    }
+    .btn {
+      background-color: #007aff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn:hover {
+      background-color: #005ecb;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 class="text-2xl font-bold text-center mb-6">Ami's Mind</h1>
+    <form id="contentForm">
+      <label for="screenshot" class="block text-sm font-medium text-gray-700">Upload Screenshot:</label>
+      <input type="file" id="screenshot" name="screenshot" accept="image/*" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+      <label for="notes" class="block text-sm font-medium text-gray-700 mt-4">Notes:</label>
+      <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+      <label for="ideas" class="block text-sm font-medium text-gray-700 mt-4">Ideas:</label>
+      <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+      <button type="submit" class="btn mt-6 w-full">Save</button>
+    </form>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"></script>
+  <script>
+    // Replace with your own Firebase config from Step 2
+    const firebaseConfig = {
+  apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
+  authDomain: "amis-s-mind.firebaseapp.com",
+  databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
+  projectId: "amis-s-mind",
+  storageBucket: "amis-s-mind.firebasestorage.app",
+  messagingSenderId: "759504870947",
+  appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
+  measurementId: "G-EZFTKMB4Z6"
+};
+  // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const storage = firebase.storage();
+
+    // Handle form submission
+    document.getElementById('contentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const screenshotFile = document.getElementById('screenshot').files[0];
+      const notes = document.getElementById('notes').value;
+      const ideas = document.getElementById('ideas').value;
+
+      if (screenshotFile) {
+        const storageRef = storage.ref('screenshots/' + screenshotFile.name);
+        storageRef.put(screenshotFile).then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((downloadURL) => {
+            const newItemRef = database.ref('mind_items').push();
+            newItemRef.set({
+              screenshotURL: downloadURL,
+              notes: notes,
+              ideas: ideas,
+              timestamp: Date.now()
+            }).then(() => {
+              alert('Saved successfully!');
+              this.reset();
+            }).catch(error => alert('Error: ' + error.message));
+          });
+        });
+      } else {
+        alert('Please upload a screenshot.');
+      }
+    });
+  </script>
+</body>
+</html>
