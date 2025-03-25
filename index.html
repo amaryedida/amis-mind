@@ -70,11 +70,13 @@ const firebaseConfig = {
     // Handle form submission
     document.getElementById('contentForm').addEventListener('submit', function(e) {
   e.preventDefault();
+  console.log('Form submitted');
   const screenshotFile = document.getElementById('screenshot').files[0];
   const notes = document.getElementById('notes').value;
-  const ideas = document.getElementById('ideas').value;
-
-  if (screenshotFile) {
+  console.log('Notes:', notes);
+  console.log('Screenshot selected:', screenshotFile ? screenshotFile.name : 'None');
+});
+    if (screenshotFile) {
     const storageRef = storage.ref('screenshots/' + screenshotFile.name);
     
     // Replace your existing storageRef.put(...) with this
