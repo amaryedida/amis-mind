@@ -70,44 +70,42 @@ const firebaseConfig = {
 
     // Handle form submission
     document.getElementById('contentForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  console.log('Form submitted');
-  const screenshotFile = document.getElementById('screenshot').files[0];
-  const notes = document.getElementById('notes').value;
-  console.log('Notes:', notes);
-  console.log('Screenshot selected:', screenshotFile ? screenshotFile.name : 'None');
+      e.preventDefault();
+      console.log('Form submitted');
+      const screenshotFile = document.getElementById('screenshot').files[0];
+      const notes = document.getElementById('notes').value;
+      console.log('Notes:', notes);
+      console.log('Screenshot selected:', screenshotFile ? screenshotFile.name : 'None');
 });
     if (screenshotFile) {
-    const storageRef = storage.ref('screenshots/' + screenshotFile.name);
-    
-    // Replace your existing storageRef.put(...) with this
-    storageRef.put(screenshotFile)
-      .then((snapshot) => {
-        // Successfully uploaded, now get the download URL
-        return snapshot.ref.getDownloadURL();
-      })
-      .then((downloadURL) => {
-        // Your existing code to save to Firestore goes here
-        return db.collection('mind_items').add({
-          screenshotURL: downloadURL,
-          notes: notes,
-          ideas: ideas,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      })
-      .then(() => {
-        alert('Saved successfully to Firestore!');
-        this.reset();
-      })
-      .catch((error) => {
-        // This catches errors from the upload or subsequent steps
-        console.error('Upload failed:', error);
-        alert('Error uploading screenshot: ' + error.message);
-      });
-  } else {
-    alert('Please upload a screenshot.');
-  }
-;
-  </script>  
+        const storageRef = storage.ref('screenshots/' + screenshotFile.name);
+
+        storageRef.put(screenshotFile)
+          .then((snapshot) => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then((downloadURL) => {
+            return db.collection('mind_items').add({
+              screenshotURL: downloadURL,
+              notes: notes,
+              ideas: ideas,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          })
+          .then(() => {
+            alert('Saved successfully to Firestore!');
+            document.getElementById('contentForm').reset(); // Use document.getElementById('contentForm').reset(); to reset the form
+          })
+          .catch((error) => {
+            console.error('Upload failed:', error);
+            alert('Error uploading screenshot: ' + error.message);
+          });
+      } else {
+        alert('Please upload a screenshot.');
+      }
+      // **End of moved Firebase code block**
+
+    }); // **Close the event listener function here**
+</script> 
 </body>
 </html>
