@@ -30,6 +30,20 @@
     .btn:hover {
       background-color: #005ecb;
     }
+    .spinner {
+      display: none;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007aff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -42,6 +56,8 @@
       <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
       <label for="ideas" class="block text-sm font-medium text-gray-700 mt-4">Ideas:</label>
       <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+      <div id="spinner" class="spinner"></div>
+      <p id="statusMessage" class="text-center text-sm text-gray-600 mt-2"></p>
       <button type="submit" class="btn mt-6 w-full">Save</button>
     </form>
   </div>
@@ -68,6 +84,10 @@ const firebaseConfig = {
   const db = firebase.firestore();
   const storage = firebase.storage();
 
+  const spinner = document.getElementById('spinner');
+  const statusMessage = document.getElementById('statusMessage');
+  const submitButton = document.querySelector('.btn');
+
   // Handle form submission
   document.getElementById('contentForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -80,6 +100,16 @@ const firebaseConfig = {
       alert('Please upload a screenshot.');
       return;
     }
+
+    // Check file size (10 MB = 10 * 1024 * 1024 bytes)
+    if (screenshotFile.size > 10 * 1024 * 1024) {
+      alert('File size exceeds 10 MB. Please upload a smaller file.');
+      return;
+    }
+
+    spinner.style.display = 'block';
+    submitButton.disabled = true;
+    statusMessage.textContent = 'Uploading...';
 
     const storageRef = storage.ref('screenshots/' + screenshotFile.name);
 
@@ -96,12 +126,16 @@ const firebaseConfig = {
         });
       })
       .then(() => {
-        alert('Saved successfully to Firestore!');
+        statusMessage.textContent = 'Saved successfully!';
         document.getElementById('contentForm').reset();
       })
       .catch((error) => {
         console.error('Upload failed:', error);
-        alert('Error uploading screenshot: ' + error.message);
+        statusMessage.textContent = 'Error: ' + error.message;
+      })
+      .finally(() => {
+        spinner.style.display = 'none';
+        submitButton.disabled = false;
       });
   });
 </script>
