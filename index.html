@@ -1,4 +1,7 @@
-<xaiArtifact artifact_id="a7b3e9f2-4c5d-4e1a-9b2f-8d6e5f3c9a1b" title="index.html" contentType="text/html">
+
+--- START OF FILE index (2)_refined.html ---
+
+<xaiArtifact artifact_id="a7b3e9f2-4c5d-4e1a-9b2f-8d6e5f3c9a1b-refined" title="index (2)_refined.html" contentType="text/html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,55 +10,80 @@
     <title>Ami's Mind</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .card { max-width: 800px; margin: 20px auto; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .btn { background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+        .card { max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+        .btn:hover:not(:disabled) { background-color: #45a049; }
         .btn:disabled { background-color: #cccccc; cursor: not-allowed; }
-        .error { color: red; }
-        .success { color: green; }
+        .btn-speech { padding: 8px 12px; font-size: 0.9em; margin-right: 5px; }
+        .btn-speech.listening { background-color: #ffc107; color: black; } /* Style for when listening */
+        .error { color: #dc3545; font-size: 0.875em; margin-top: 4px; }
+        .success { color: #28a745; font-size: 0.875em; margin-top: 4px; }
         .spinner { display: none; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 10px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .item-card { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-        .item-img { max-width: 200px; margin: 5px; }
-        .item-text { margin: 5px 0; }
-        .item-timestamp { font-size: 0.8em; color: #666; }
+        .item-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; background-color: #f9f9f9; }
+        .item-img-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+        .item-img { max-width: 150px; max-height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
+        .item-text { margin: 8px 0; word-wrap: break-word; }
+        .item-timestamp { font-size: 0.8em; color: #666; text-align: right; margin-top: 5px; }
+        label { font-weight: 600; }
+        input[type="text"], textarea { transition: border-color 0.3s ease; }
+        input[type="text"]:focus, textarea:focus { border-color: #4CAF50; outline: none; box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2); }
     </style>
 </head>
-<body>
+<body class="bg-gray-100">
     <div class="card">
-        <h1 class="text-2xl font-bold text-center mb-6">Ami's Mind</h1>
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-700">Ami's Mind</h1>
         <form id="contentForm">
-            <label for="pictures" class="block text-sm font-medium text-gray-700">Upload Pictures:</label>
-            <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-            <p id="fileError" class="text-sm error"></p>
-                    <label for="notes" class="block text-sm font-medium text-gray-700 mt-4">Notes:</label>
-        <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
-        <button type="button" id="startNotesSpeech" class="mt-2 mr-2 p-2 bg-blue-500 text-white rounded">Start Speech</button>
-        <button type="button" id="stopNotesSpeech" class="mt-2 p-2 bg-red-500 text-white rounded">Stop Speech</button>
-        <p id="notesError" class="text-sm error"></p>
+            <!-- Pictures Input -->
+            <div class="mb-4">
+                <label for="pictures" class="block text-sm font-medium text-gray-700 mb-1">Upload Pictures:</label>
+                <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer border border-gray-300 rounded-md p-2">
+                <p id="fileError" class="error"></p>
+            </div>
 
-        <label for="ideas" class="block text-sm font-medium text-gray-700 mt-4">Ideas:</label>
-        <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
-        <button type="button" id="startIdeasSpeech" class="mt-2 mr-2 p-2 bg-blue-500 text-white rounded">Start Speech</button>
-        <button type="button" id="stopIdeasSpeech" class="mt-2 p-2 bg-red-500 text-white rounded">Stop Speech</button>
-        <p id="ideasError" class="text-sm error"></p>
+            <!-- Notes Input -->
+            <div class="mb-4">
+                <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes:</label>
+                <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" rows="3"></textarea>
+                <div class="mt-2">
+                    <button type="button" id="startNotesSpeech" class="btn-speech bg-blue-500 text-white rounded hover:bg-blue-600">Start Speech</button>
+                    <button type="button" id="stopNotesSpeech" class="btn-speech bg-red-500 text-white rounded hover:bg-red-600">Stop Speech</button>
+                </div>
+                <p id="notesError" class="error"></p>
+            </div>
 
-        <div id="spinner" class="spinner"></div>
-        <p id="statusMessage" class="text-center text-sm text-gray-600 mt-2"></p>
-        <button type="submit" class="btn mt-6 w-full">Save</button>
-    </form>
-</div>
+            <!-- Ideas Input -->
+            <div class="mb-4">
+                <label for="ideas" class="block text-sm font-medium text-gray-700 mb-1">Ideas:</label>
+                <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" rows="3"></textarea>
+                 <div class="mt-2">
+                    <button type="button" id="startIdeasSpeech" class="btn-speech bg-blue-500 text-white rounded hover:bg-blue-600">Start Speech</button>
+                    <button type="button" id="stopIdeasSpeech" class="btn-speech bg-red-500 text-white rounded hover:bg-red-600">Stop Speech</button>
+                </div>
+                <p id="ideasError" class="error"></p>
+            </div>
 
-<div class="card mt-6">
-    <h2 class="text-xl font-bold text-center mb-4">Saved Items</h2>
-    <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-4" placeholder="Search notes and ideas">
-    <div id="itemsList"></div>
-</div>
+            <!-- Submission Area -->
+            <div id="spinner" class="spinner"></div>
+            <p id="statusMessage" class="text-center text-sm mt-2 mb-4"></p>
+            <button type="submit" class="btn mt-2 w-full text-lg font-semibold">Save</button>
+        </form>
+    </div>
+
+    <div class="card mt-6">
+        <h2 class="text-2xl font-bold text-center mb-4 text-gray-700">Saved Items</h2>
+        <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-4 shadow-sm" placeholder="Search notes and ideas...">
+        <div id="itemsList">
+            <p id="loadingMessage" class="text-center text-gray-500 mt-4">Loading items...</p>
+        </div>
+    </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
-    // Replace with your Firebase configuration
+    // IMPORTANT: Replace with your Firebase configuration
+    // Make sure your Firebase Security Rules (Firestore & Storage) are secure!
     const firebaseConfig = {
   apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
   authDomain: "amis-s-mind.firebaseapp.com",
@@ -67,81 +95,163 @@
   measurementId: "G-EZFTKMB4Z6"
 };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
 
+    // Constants
+    const MAX_FILE_SIZE_MB = 10;
+    const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
     // DOM elements
+    const contentForm = document.getElementById('contentForm');
+    const picturesInput = document.getElementById('pictures');
+    const notesTextarea = document.getElementById('notes');
+    const ideasTextarea = document.getElementById('ideas');
     const spinner = document.getElementById('spinner');
     const statusMessage = document.getElementById('statusMessage');
-    const submitButton = document.querySelector('.btn');
+    const submitButton = contentForm.querySelector('button[type="submit"]');
     const fileError = document.getElementById('fileError');
     const notesError = document.getElementById('notesError');
     const ideasError = document.getElementById('ideasError');
     const itemsList = document.getElementById('itemsList');
     const searchBar = document.getElementById('searchBar');
+    const loadingMessage = document.getElementById('loadingMessage');
 
     // Speech Recognition Setup
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const notesRecognition = SpeechRecognition ? new SpeechRecognition() : null;
-    const ideasRecognition = SpeechRecognition ? new SpeechRecognition() : null;
+    let notesRecognition = null;
+    let ideasRecognition = null;
 
-    if (notesRecognition && ideasRecognition) {
-        notesRecognition.continuous = true;
-        ideasRecognition.continuous = true;
+    const startNotesSpeechBtn = document.getElementById('startNotesSpeech');
+    const stopNotesSpeechBtn = document.getElementById('stopNotesSpeech');
+    const startIdeasSpeechBtn = document.getElementById('startIdeasSpeech');
+    const stopIdeasSpeechBtn = document.getElementById('stopIdeasSpeech');
 
-        notesRecognition.onresult = (event) => {
-            const transcript = event.results[event.results.length - 1][0].transcript;
-            document.getElementById('notes').value += transcript + ' ';
+    function setupSpeechRecognition(recognitionInstance, textarea, startBtn) {
+        recognitionInstance.continuous = true; // Keep listening
+        recognitionInstance.interimResults = false; // Only final results
+
+        recognitionInstance.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    transcript += event.results[i][0].transcript;
+                }
+            }
+            textarea.value += transcript + ' '; // Append transcript
         };
 
-        ideasRecognition.onresult = (event) => {
-            const transcript = event.results[event.results.length - 1][0].transcript;
-            document.getElementById('ideas').value += transcript + ' ';
+        recognitionInstance.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+            alert(`Speech recognition error: ${event.error}`);
+            startBtn.textContent = 'Start Speech';
+            startBtn.classList.remove('listening');
         };
 
-        document.getElementById('startNotesSpeech').addEventListener('click', () => notesRecognition.start());
-        document.getElementById('stopNotesSpeech').addEventListener('click', () => notesRecognition.stop());
-        document.getElementById('startIdeasSpeech').addEventListener('click', () => ideasRecognition.start());
-        document.getElementById('stopIdeasSpeech').addEventListener('click', () => ideasRecognition.stop());
-    } else {
-        alert('Speech recognition is not supported in this browser.');
+        recognitionInstance.onstart = () => {
+            startBtn.textContent = 'Listening...';
+            startBtn.classList.add('listening');
+            console.log('Speech recognition started');
+        };
+
+        recognitionInstance.onend = () => {
+            startBtn.textContent = 'Start Speech';
+            startBtn.classList.remove('listening');
+            console.log('Speech recognition stopped');
+        };
     }
 
-    // Fetch and display items
+    if (SpeechRecognition) {
+        notesRecognition = new SpeechRecognition();
+        ideasRecognition = new SpeechRecognition();
+
+        setupSpeechRecognition(notesRecognition, notesTextarea, startNotesSpeechBtn);
+        setupSpeechRecognition(ideasRecognition, ideasTextarea, startIdeasSpeechBtn);
+
+        startNotesSpeechBtn.addEventListener('click', () => {
+             try { notesRecognition.start(); } catch(e) { console.error("Error starting notes recognition:", e); alert("Could not start speech recognition. Is microphone permission granted?"); }
+        });
+        stopNotesSpeechBtn.addEventListener('click', () => notesRecognition.stop());
+        startIdeasSpeechBtn.addEventListener('click', () => {
+            try { ideasRecognition.start(); } catch(e) { console.error("Error starting ideas recognition:", e); alert("Could not start speech recognition. Is microphone permission granted?"); }
+        });
+        stopIdeasSpeechBtn.addEventListener('click', () => ideasRecognition.stop());
+
+    } else {
+        console.warn('Speech recognition not supported in this browser.');
+        [startNotesSpeechBtn, stopNotesSpeechBtn, startIdeasSpeechBtn, stopIdeasSpeechBtn].forEach(btn => btn.disabled = true);
+        // Optionally display a message to the user
+        notesTextarea.placeholder = "Speech recognition not supported in your browser.";
+        ideasTextarea.placeholder = "Speech recognition not supported in your browser.";
+    }
+
+    // --- Data Fetching and Display ---
     let allItems = [];
-    db.collection('pictures').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-        allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        displayItems();
-    }, (error) => {
-        console.error('Error fetching items:', error);
-        itemsList.innerHTML = '<p class="text-center error">Error loading items.</p>';
-    });
+
+    const unsubscribe = db.collection('pictures')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+            loadingMessage.style.display = 'none'; // Hide loading message
+            allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            displayItems(); // Initial display or update display
+        }, (error) => {
+            console.error('Error fetching items:', error);
+            loadingMessage.style.display = 'none';
+            itemsList.innerHTML = '<p class="text-center error">Error loading items. Please check console or permissions.</p>';
+        });
 
     // Display items based on search term
     function displayItems() {
-        const searchTerm = searchBar.value.toLowerCase();
+        const searchTerm = searchBar.value.toLowerCase().trim();
         const filteredItems = allItems.filter(item => {
-            const notes = item.notes.toLowerCase();
-            const ideas = item.ideas.toLowerCase();
-            return notes.includes(searchTerm) || ideas.includes(searchTerm);
+            // Ensure item has notes and ideas properties, default to empty string if not
+            const notes = (item.notes || '').toLowerCase();
+            const ideas = (item.ideas || '').toLowerCase();
+            // Check if timestamp exists and has toDate method before formatting
+            const timestampString = item.timestamp && typeof item.timestamp.toDate === 'function'
+                ? item.timestamp.toDate().toLocaleString()
+                : 'Unknown time';
+
+            return notes.includes(searchTerm) || ideas.includes(searchTerm) || timestampString.includes(searchTerm);
         });
 
-        itemsList.innerHTML = '';
-        if (filteredItems.length === 0) {
-            itemsList.innerHTML = '<p class="text-center text-gray-500">No items found.</p>';
-            return;
+        itemsList.innerHTML = ''; // Clear previous items
+        if (filteredItems.length === 0 && allItems.length > 0) {
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items match your search.</p>';
+        } else if (allItems.length === 0 && !loadingMessage.style.display) {
+             // This condition might be hit briefly between loading end and first data arrival
+             // or if the collection is genuinely empty. Keep loading message hidden.
+             // If loading message is already hidden and allItems is empty, show "No items yet".
+             if(document.getElementById('loadingMessage').style.display === 'none') {
+                 itemsList.innerHTML = '<p class="text-center text-gray-500">No items saved yet.</p>';
+             }
         }
+
 
         filteredItems.forEach((item) => {
             const itemElement = document.createElement('div');
             itemElement.className = 'item-card';
-            const imagesHtml = item.pictureUrls.map(url => `<img src="${url}" alt="Picture" class="item-img">`).join('');
+
+            // Image display
+            let imagesHtml = '';
+            if (item.pictureUrls && item.pictureUrls.length > 0) {
+                imagesHtml = `<div class="item-img-container">` +
+                             item.pictureUrls.map(url => `<a href="${url}" target="_blank"><img src="${url}" alt="Uploaded Picture" class="item-img"></a>`).join('') +
+                             `</div>`;
+            }
+
+            // Timestamp formatting
+            const timestampStr = item.timestamp && typeof item.timestamp.toDate === 'function'
+                               ? new Date(item.timestamp.toDate()).toLocaleString()
+                               : 'Unknown time';
+
             itemElement.innerHTML = `
                 ${imagesHtml}
-                <p class="item-text"><strong>Notes:</strong> ${item.notes}</p>
-                <p class="item-text"><strong>Ideas:</strong> ${item.ideas}</p>
-                <p class="item-timestamp">${item.timestamp ? new Date(item.timestamp.toDate()).toLocaleString() : 'Unknown time'}</p>
+                <p class="item-text"><strong>Notes:</strong> ${item.notes || 'N/A'}</p>
+                <p class="item-text"><strong>Ideas:</strong> ${item.ideas || 'N/A'}</p>
+                <p class="item-timestamp">${timestampStr}</p>
             `;
             itemsList.appendChild(itemElement);
         });
@@ -150,19 +260,21 @@
     // Listen for search input
     searchBar.addEventListener('input', displayItems);
 
-    // Handle form submission
-    document.getElementById('contentForm').addEventListener('submit', function(e) {
+    // --- Form Submission ---
+    contentForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        const files = document.getElementById('pictures').files;
-        const notes = document.getElementById('notes').value.trim();
-        const ideas = document.getElementById('ideas').value.trim();
+        const files = picturesInput.files;
+        const notes = notesTextarea.value.trim();
+        const ideas = ideasTextarea.value.trim();
 
+        // Clear previous errors and status
         fileError.textContent = '';
         notesError.textContent = '';
         ideasError.textContent = '';
         statusMessage.textContent = '';
         statusMessage.classList.remove('error', 'success');
 
+        // Validation
         let isValid = true;
         if (files.length === 0) {
             fileError.textContent = 'Please upload at least one picture.';
@@ -174,8 +286,8 @@
                     isValid = false;
                     break;
                 }
-                if (file.size > 10 * 1024 * 1024) {
-                    fileError.textContent = 'Each file must be less than 10 MB.';
+                if (file.size > MAX_FILE_SIZE_BYTES) {
+                    fileError.textContent = `Each file must be less than ${MAX_FILE_SIZE_MB} MB.`;
                     isValid = false;
                     break;
                 }
@@ -193,61 +305,110 @@
 
         if (!isValid) return;
 
+        // Start submission process
         spinner.style.display = 'block';
         submitButton.disabled = true;
-        statusMessage.textContent = 'Uploading...';
+        statusMessage.textContent = 'Uploading pictures...';
 
-        const pictureUrls = [];
-        const uploadPromises = Array.from(files).map(file => {
-            const storageRef = storage.ref('pictures/' + Date.now() + '-' + file.name);
-            const uploadTask = storageRef.put(file);
-            return new Promise((resolve, reject) => {
-                uploadTask.on('state_changed',
-                    null,
-                    (error) => reject(error),
-                    () => {
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                            pictureUrls.push(downloadURL);
-                            resolve();
-                        });
-                    }
-                );
-            });
-        });
+        try {
+            const uploadPromises = Array.from(files).map(file => {
+                const filePath = `pictures/${Date.now()}-${file.name}`; // Unique path
+                const storageRef = storage.ref(filePath);
+                const uploadTask = storageRef.put(file);
 
-        Promise.all(uploadPromises)
-            .then(() => {
-                return db.collection('pictures').add({
-                    pictureUrls: pictureUrls,
-                    notes: notes,
-                    ideas: ideas,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                // Return a promise that resolves with the download URL
+                return new Promise((resolve, reject) => {
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            // Optional: Update progress here
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done for ' + file.name);
+                            statusMessage.textContent = `Uploading ${file.name}: ${Math.round(progress)}%`;
+                        },
+                        (error) => {
+                            console.error("Upload failed for file:", file.name, error);
+                            reject(error); // Reject the promise on error
+                        },
+                        async () => {
+                            // Upload completed successfully, now get the download URL
+                            try {
+                                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                                console.log('File available at', downloadURL);
+                                resolve(downloadURL); // Resolve the promise with the URL
+                            } catch (urlError) {
+                                console.error("Failed to get download URL for file:", file.name, urlError);
+                                reject(urlError); // Reject if getting URL fails
+                            }
+                        }
+                    );
                 });
-            })
-            .then(() => {
-                statusMessage.textContent = 'Saved successfully!';
-                statusMessage.classList.add('success');
-                document.getElementById('contentForm').reset();
-            })
-            .catch((error) => {
-                handleError(error);
-            })
-            .finally(() => {
-                spinner.style.display = 'none';
-                submitButton.disabled = false;
             });
+
+            // Wait for all uploads to complete and get their URLs
+            const pictureUrls = await Promise.all(uploadPromises);
+            statusMessage.textContent = 'Saving data...';
+
+            // Add data to Firestore
+            await db.collection('pictures').add({
+                pictureUrls: pictureUrls,
+                notes: notes,
+                ideas: ideas,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() // Use server time
+            });
+
+            statusMessage.textContent = 'Saved successfully!';
+            statusMessage.classList.add('success');
+            contentForm.reset(); // Clear the form
+
+        } catch (error) {
+            handleError(error); // Handle errors from upload or Firestore save
+        } finally {
+            // Runs whether try succeeded or failed
+            spinner.style.display = 'none';
+            submitButton.disabled = false;
+            // Keep success/error message visible for a bit longer or clear it after a delay if desired
+            // setTimeout(() => { statusMessage.textContent = ''; statusMessage.classList.remove('success', 'error'); }, 5000);
+        }
     });
 
+    // Generic Error Handler
     function handleError(error) {
-        console.error('Error:', error);
-        let message = 'An error occurred.';
-        if (error.code === 'storage/unauthorized') message = 'Unauthorized access. Please check permissions.';
-        else if (error.code === 'storage/canceled') message = 'Upload canceled.';
-        else if (error.code === 'firestore/permission-denied') message = 'Permission denied to save data.';
+        console.error('Operation Failed:', error);
+        let message = 'An unexpected error occurred. Please check the console.';
+        if (error.code) {
+            switch (error.code) {
+                case 'storage/unauthorized':
+                    message = 'Storage Error: You do not have permission to upload files.';
+                    break;
+                case 'storage/canceled':
+                    message = 'Upload canceled.';
+                    break;
+                case 'storage/object-not-found':
+                     message = 'Storage Error: File not found during operation.';
+                     break;
+                case 'firestore/permission-denied':
+                    message = 'Firestore Error: You do not have permission to save data.';
+                    break;
+                // Add more specific Firebase error codes as needed
+                default:
+                    message = `Error: ${error.message} (Code: ${error.code})`;
+            }
+        } else if (error.message) {
+             message = error.message;
+        }
         statusMessage.textContent = message;
         statusMessage.classList.add('error');
     }
+
+    // Optional: Clean up the listener when the page unloads (though often not strictly necessary for simple scripts)
+    // window.addEventListener('beforeunload', () => {
+    //     if (unsubscribe) {
+    //         unsubscribe();
+    //     }
+    // });
+
 </script>
 </body>
 </html>
 </xaiArtifact>
+--- END OF FILE index (2)_refined.html ---
