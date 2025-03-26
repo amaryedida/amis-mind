@@ -1,124 +1,61 @@
+<xaiArtifact artifact_id="a7b3e9f2-4c5d-4e1a-9b2f-8d6e5f3c9a1b" title="index.html" contentType="text/html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ami's Mind</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f7;
-    }
-    .card {
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 500px;
-    }
-    .btn {
-      background-color: #007aff;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .btn:hover {
-      background-color: #005ecb;
-    }
-    .btn:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    .spinner {
-      display: none;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #007aff;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      animation: spin 1s linear infinite;
-      margin: 10px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .error {
-      color: #d9534f;
-    }
-    .success {
-      color: #5cb85c;
-    }
-    .progress-bar {
-      width: 100%;
-      background-color: #e0e0e0;
-      border-radius: 4px;
-      height: 8px;
-      margin-top: 10px;
-    }
-    .progress {
-      height: 100%;
-      background-color: #007aff;
-      width: 0%;
-      border-radius: 4px;
-      transition: width 0.3s ease-in-out;
-    }
-    .item-card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-    .item-img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .item-text {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-    .item-timestamp {
-      font-size: 12px;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ami's Mind</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .card { max-width: 800px; margin: 20px auto; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn { background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn:disabled { background-color: #cccccc; cursor: not-allowed; }
+        .error { color: red; }
+        .success { color: green; }
+        .spinner { display: none; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 10px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .item-card { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .item-img { max-width: 200px; margin: 5px; }
+        .item-text { margin: 5px 0; }
+        .item-timestamp { font-size: 0.8em; color: #666; }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1 class="text-2xl font-bold text-center mb-6">Ami's Mind</h1>
-    <form id="contentForm">
-      <label for="screenshot" class="block text-sm font-medium text-gray-700">Upload Screenshot:</label>
-      <input type="file" id="screenshot" name="screenshot" accept="image/*" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-      <p id="fileError" class="text-sm error"></p>
-      <div class="progress-bar"><div id="uploadProgress" class="progress"></div></div>
-      <label for="notes" class="block text-sm font-medium text-gray-700 mt-4">Notes:</label>
-      <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
-      <p id="notesError" class="text-sm error"></p>
-      <label for="ideas" class="block text-sm font-medium text-gray-700 mt-4">Ideas:</label>
-      <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
-      <p id="ideasError" class="text-sm error"></p>
-      <div id="spinner" class="spinner"></div>
-      <p id="statusMessage" class="text-center text-sm text-gray-600 mt-2"></p>
-      <button type="submit" class="btn mt-6 w-full">Save</button>
+    <div class="card">
+        <h1 class="text-2xl font-bold text-center mb-6">Ami's Mind</h1>
+        <form id="contentForm">
+            <label for="pictures" class="block text-sm font-medium text-gray-700">Upload Pictures:</label>
+            <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            <p id="fileError" class="text-sm error"></p>
+                    <label for="notes" class="block text-sm font-medium text-gray-700 mt-4">Notes:</label>
+        <textarea id="notes" name="notes" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
+        <button type="button" id="startNotesSpeech" class="mt-2 mr-2 p-2 bg-blue-500 text-white rounded">Start Speech</button>
+        <button type="button" id="stopNotesSpeech" class="mt-2 p-2 bg-red-500 text-white rounded">Stop Speech</button>
+        <p id="notesError" class="text-sm error"></p>
+
+        <label for="ideas" class="block text-sm font-medium text-gray-700 mt-4">Ideas:</label>
+        <textarea id="ideas" name="ideas" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="3"></textarea>
+        <button type="button" id="startIdeasSpeech" class="mt-2 mr-2 p-2 bg-blue-500 text-white rounded">Start Speech</button>
+        <button type="button" id="stopIdeasSpeech" class="mt-2 p-2 bg-red-500 text-white rounded">Stop Speech</button>
+        <p id="ideasError" class="text-sm error"></p>
+
+        <div id="spinner" class="spinner"></div>
+        <p id="statusMessage" class="text-center text-sm text-gray-600 mt-2"></p>
+        <button type="submit" class="btn mt-6 w-full">Save</button>
     </form>
-  </div>
+</div>
 
-  <div class="card mt-6">
+<div class="card mt-6">
     <h2 class="text-xl font-bold text-center mb-4">Saved Items</h2>
+    <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-4" placeholder="Search notes and ideas">
     <div id="itemsList"></div>
-  </div>
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-  <script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+<script>
+    // Replace with your Firebase configuration
     const firebaseConfig = {
   apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
   authDomain: "amis-s-mind.firebaseapp.com",
@@ -128,139 +65,189 @@
   messagingSenderId: "759504870947",
   appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
   measurementId: "G-EZFTKMB4Z6"
-  };
+};
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
 
+    // DOM elements
     const spinner = document.getElementById('spinner');
     const statusMessage = document.getElementById('statusMessage');
     const submitButton = document.querySelector('.btn');
     const fileError = document.getElementById('fileError');
     const notesError = document.getElementById('notesError');
     const ideasError = document.getElementById('ideasError');
-    const uploadProgress = document.getElementById('uploadProgress');
     const itemsList = document.getElementById('itemsList');
+    const searchBar = document.getElementById('searchBar');
 
-    // Function to display items
-    function displayItems() {
-      itemsList.innerHTML = '<p class="text-center text-gray-500">Loading...</p>';
-      db.collection('mind_items').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-        itemsList.innerHTML = '';
-        if (snapshot.empty) {
-          itemsList.innerHTML = '<p class="text-center text-gray-500">No items found.</p>';
-          return;
-        }
-        snapshot.forEach((doc) => {
-          const item = doc.data();
-          const itemElement = document.createElement('div');
-          itemElement.className = 'item-card';
-          itemElement.innerHTML = `
-            <img src="${item.screenshotURL}" alt="Screenshot" class="item-img">
-            <p class="item-text"><strong>Notes:</strong> ${item.notes}</p>
-            <p class="item-text"><strong>Ideas:</strong> ${item.ideas}</p>
-            <p class="item-timestamp">${item.timestamp ? new Date(item.timestamp.toDate()).toLocaleString() : 'Unknown time'}</p>
-          `;
-          itemsList.appendChild(itemElement);
-        });
-      }, (error) => {
-        console.error('Error fetching items:', error);
-        itemsList.innerHTML = '<p class="text-center error">Error loading items.</p>';
-      });
+    // Speech Recognition Setup
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const notesRecognition = SpeechRecognition ? new SpeechRecognition() : null;
+    const ideasRecognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+    if (notesRecognition && ideasRecognition) {
+        notesRecognition.continuous = true;
+        ideasRecognition.continuous = true;
+
+        notesRecognition.onresult = (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript;
+            document.getElementById('notes').value += transcript + ' ';
+        };
+
+        ideasRecognition.onresult = (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript;
+            document.getElementById('ideas').value += transcript + ' ';
+        };
+
+        document.getElementById('startNotesSpeech').addEventListener('click', () => notesRecognition.start());
+        document.getElementById('stopNotesSpeech').addEventListener('click', () => notesRecognition.stop());
+        document.getElementById('startIdeasSpeech').addEventListener('click', () => ideasRecognition.start());
+        document.getElementById('stopIdeasSpeech').addEventListener('click', () => ideasRecognition.stop());
+    } else {
+        alert('Speech recognition is not supported in this browser.');
     }
 
-    // Load items on page load
-    displayItems();
+    // Fetch and display items
+    let allItems = [];
+    db.collection('pictures').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+        allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        displayItems();
+    }, (error) => {
+        console.error('Error fetching items:', error);
+        itemsList.innerHTML = '<p class="text-center error">Error loading items.</p>';
+    });
+
+    // Display items based on search term
+    function displayItems() {
+        const searchTerm = searchBar.value.toLowerCase();
+        const filteredItems = allItems.filter(item => {
+            const notes = item.notes.toLowerCase();
+            const ideas = item.ideas.toLowerCase();
+            return notes.includes(searchTerm) || ideas.includes(searchTerm);
+        });
+
+        itemsList.innerHTML = '';
+        if (filteredItems.length === 0) {
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items found.</p>';
+            return;
+        }
+
+        filteredItems.forEach((item) => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'item-card';
+            const imagesHtml = item.pictureUrls.map(url => `<img src="${url}" alt="Picture" class="item-img">`).join('');
+            itemElement.innerHTML = `
+                ${imagesHtml}
+                <p class="item-text"><strong>Notes:</strong> ${item.notes}</p>
+                <p class="item-text"><strong>Ideas:</strong> ${item.ideas}</p>
+                <p class="item-timestamp">${item.timestamp ? new Date(item.timestamp.toDate()).toLocaleString() : 'Unknown time'}</p>
+            `;
+            itemsList.appendChild(itemElement);
+        });
+    }
+
+    // Listen for search input
+    searchBar.addEventListener('input', displayItems);
 
     // Handle form submission
     document.getElementById('contentForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+        e.preventDefault();
+        const files = document.getElementById('pictures').files;
+        const notes = document.getElementById('notes').value.trim();
+        const ideas = document.getElementById('ideas').value.trim();
 
-      const screenshotFile = document.getElementById('screenshot').files[0];
-      const notes = document.getElementById('notes').value.trim();
-      const ideas = document.getElementById('ideas').value.trim();
+        fileError.textContent = '';
+        notesError.textContent = '';
+        ideasError.textContent = '';
+        statusMessage.textContent = '';
+        statusMessage.classList.remove('error', 'success');
 
-      fileError.textContent = '';
-      notesError.textContent = '';
-      ideasError.textContent = '';
-      statusMessage.textContent = '';
-      statusMessage.classList.remove('error', 'success');
-      uploadProgress.style.width = '0%';
-
-      let isValid = true;
-
-      if (!screenshotFile) {
-        fileError.textContent = 'Please upload a screenshot.';
-        isValid = false;
-      } else if (!screenshotFile.type.startsWith('image/')) {
-        fileError.textContent = 'Please upload an image file.';
-        isValid = false;
-      } else if (screenshotFile.size > 10 * 1024 * 1024) {
-        fileError.textContent = 'File size exceeds 10 MB.';
-        isValid = false;
-      }
-
-      if (!notes) {
-        notesError.textContent = 'Please enter some notes.';
-        isValid = false;
-      }
-
-      if (!ideas) {
-        ideasError.textContent = 'Please enter some ideas.';
-        isValid = false;
-      }
-
-      if (!isValid) return;
-
-      spinner.style.display = 'block';
-      submitButton.disabled = true;
-      statusMessage.textContent = 'Uploading...';
-
-      const storageRef = storage.ref('screenshots/' + Date.now() + '-' + screenshotFile.name);
-      const uploadTask = storageRef.put(screenshotFile);
-
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          uploadProgress.style.width = progress + '%';
-        },
-        (error) => {
-          handleError(error);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            db.collection('mind_items').add({
-              screenshotURL: downloadURL,
-              notes: notes,
-              ideas: ideas,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-              statusMessage.textContent = 'Saved successfully!';
-              statusMessage.classList.add('success');
-              document.getElementById('contentForm').reset();
-              uploadProgress.style.width = '0%';
-            }).catch(handleError).finally(cleanup);
-          }).catch(handleError);
+        let isValid = true;
+        if (files.length === 0) {
+            fileError.textContent = 'Please upload at least one picture.';
+            isValid = false;
+        } else {
+            for (let file of files) {
+                if (!file.type.startsWith('image/')) {
+                    fileError.textContent = 'Please upload image files only.';
+                    isValid = false;
+                    break;
+                }
+                if (file.size > 10 * 1024 * 1024) {
+                    fileError.textContent = 'Each file must be less than 10 MB.';
+                    isValid = false;
+                    break;
+                }
+            }
         }
-      );
+
+        if (!notes) {
+            notesError.textContent = 'Please enter some notes.';
+            isValid = false;
+        }
+        if (!ideas) {
+            ideasError.textContent = 'Please enter some ideas.';
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        spinner.style.display = 'block';
+        submitButton.disabled = true;
+        statusMessage.textContent = 'Uploading...';
+
+        const pictureUrls = [];
+        const uploadPromises = Array.from(files).map(file => {
+            const storageRef = storage.ref('pictures/' + Date.now() + '-' + file.name);
+            const uploadTask = storageRef.put(file);
+            return new Promise((resolve, reject) => {
+                uploadTask.on('state_changed',
+                    null,
+                    (error) => reject(error),
+                    () => {
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            pictureUrls.push(downloadURL);
+                            resolve();
+                        });
+                    }
+                );
+            });
+        });
+
+        Promise.all(uploadPromises)
+            .then(() => {
+                return db.collection('pictures').add({
+                    pictureUrls: pictureUrls,
+                    notes: notes,
+                    ideas: ideas,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            })
+            .then(() => {
+                statusMessage.textContent = 'Saved successfully!';
+                statusMessage.classList.add('success');
+                document.getElementById('contentForm').reset();
+            })
+            .catch((error) => {
+                handleError(error);
+            })
+            .finally(() => {
+                spinner.style.display = 'none';
+                submitButton.disabled = false;
+            });
     });
 
     function handleError(error) {
-      console.error('Error:', error);
-      let message = 'An error occurred.';
-      if (error.code === 'storage/unauthorized') message = 'Unauthorized access. Please check permissions.';
-      else if (error.code === 'storage/canceled') message = 'Upload canceled.';
-      else if (error.code === 'firestore/permission-denied') message = 'Permission denied to save data.';
-      statusMessage.textContent = message;
-      statusMessage.classList.add('error');
-      cleanup();
+        console.error('Error:', error);
+        let message = 'An error occurred.';
+        if (error.code === 'storage/unauthorized') message = 'Unauthorized access. Please check permissions.';
+        else if (error.code === 'storage/canceled') message = 'Upload canceled.';
+        else if (error.code === 'firestore/permission-denied') message = 'Permission denied to save data.';
+        statusMessage.textContent = message;
+        statusMessage.classList.add('error');
     }
-
-    function cleanup() {
-      spinner.style.display = 'none';
-      submitButton.disabled = false;
-    }
-  </script>
+</script>
 </body>
 </html>
+</xaiArtifact>
