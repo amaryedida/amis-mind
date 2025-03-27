@@ -1,4 +1,4 @@
-<xaiArtifact artifact_id="a7b3e9f2-4c5d-4e1a-9b2f-8d6e5f3c9a1b-revised-mic" title="index (4)_revised_mic.html" contentType="text/html">
+<xaiArtifact artifact_id="a7b3e9f2-4c5d-4e1a-9b2f-8d6e5f3c9a1b-revised-mic" title="index.html" contentType="text/html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,191 +8,190 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* General Styles */
-        body { background-color: #f3f4f6; font-family: sans-serif; }
-        .card { max-width: 700px; margin: 25px auto; padding: 25px; background-color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-
-        /* Input Trigger Styles */
-        #inputTrigger {
-            display: flex; align-items: center; padding: 12px 16px; border: 1px solid #d1d5db;
-            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); cursor: text; background-color: white;
-            margin-bottom: 20px; transition: box-shadow 0.2s ease;
+        body { 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: sans-serif; 
         }
-        #inputTrigger:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        #inputTrigger span { color: #6b7280; flex-grow: 1; }
-        #inputTrigger .icon {
-            margin-left: 15px; color: #4b5563; width: 22px; height: 22px; flex-shrink: 0;
-        }
+        .card { max-width: 700px; margin: 25px auto; padding: 25px; background-color: rgba(255, 255, 255, 0.95); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .header { padding: 20px; font-size: 24px; font-weight: bold; text-align: left; color: #374151; }
+    /* Input Trigger Styles */
+    #inputTrigger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        cursor: pointer;
+        background-color: white;
+        margin-bottom: 20px;
+        transition: box-shadow 0.2s ease;
+    }
+    #inputTrigger:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    #inputTrigger .icon {
+        width: 40px;
+        height: 40px;
+        margin: 0 15px;
+        color: #4b5563;
+    }
 
-        /* Form Styles */
-        #contentFormWrapper { display: none; }
-        .btn { background-color: #10b981; color: white; padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease; font-weight: 500; }
-        .btn:hover:not(:disabled) { background-color: #059669; }
-        .btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
-        .btn-secondary { background-color: #6b7280; }
-        .btn-secondary:hover:not(:disabled) { background-color: #4b5563; }
-        .btn-danger { background-color: #ef4444; }
-        .btn-danger:hover:not(:disabled) { background-color: #dc2626; }
-        .btn-small { padding: 6px 10px; font-size: 0.875rem; margin-left: 8px;}
+    /* Form Styles */
+    #contentFormWrapper { display: none; }
+    .btn { background-color: #10b981; color: white; padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease; font-weight: 500; }
+    .btn:hover:not(:disabled) { background-color: #059669; }
+    .btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
+    .btn-secondary { background-color: #6b7280; }
+    .btn-secondary:hover:not(:disabled) { background-color: #4b5563; }
+    .btn-danger { background-color: #ef4444; }
+    .btn-danger:hover:not(:disabled) { background-color: #dc2626; }
+    .btn-small { padding: 6px 10px; font-size: 0.875rem; margin-left: 8px;}
 
-        /* Speech Microphone Button Styles */
-        .mic-btn {
-            background: none; border: none; padding: 5px; cursor: pointer; color: #6b7280; /* Gray-500 */
-            transition: color 0.2s ease; vertical-align: middle; margin-left: 8px;
-        }
-        .mic-btn svg { width: 20px; height: 20px; }
-        .mic-btn:hover:not(:disabled) { color: #10b981; /* Emerald-500 */ }
-        .mic-btn:disabled { color: #d1d5db; /* Gray-300 */ cursor: not-allowed; }
-        .mic-btn.pulsing { color: #ef4444; /* Red-500 */ animation: pulse 1.5s infinite ease-in-out; }
+    /* Speech Microphone Button Styles */
+    .mic-btn {
+        background: none; border: none; padding: 5px; cursor: pointer; color: #6b7280;
+        transition: color 0.2s ease; vertical-align: middle; margin-left: 8px;
+    }
+    .mic-btn svg { width: 20px; height: 20px; }
+    .mic-btn:hover:not(:disabled) { color: #10b981; }
+    .mic-btn:disabled { color: #d1d5db; cursor: not-allowed; }
+    .mic-btn.pulsing { color: #ef4444; animation: pulse 1.5s infinite ease-in-out; }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
+    /* Feedback Styles */
+    .error { color: #dc3545; font-size: 0.875em; margin-top: 4px; }
+    .success { color: #10b981; font-size: 0.875em; margin-top: 4px; }
+    .spinner { display: none; border: 4px solid #e5e7eb; border-top: 4px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 15px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Feedback Styles */
-        .error { color: #dc3545; font-size: 0.875em; margin-top: 4px; }
-        .success { color: #10b981; font-size: 0.875em; margin-top: 4px; }
-        .spinner { display: none; border: 4px solid #e5e7eb; border-top: 4px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 15px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    /* Saved Item Styles */
+    #itemsList {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .item-card { border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; background-color: #ffffff; position: relative; }
+    .item-img-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+    .item-img { max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; cursor: pointer; }
+    .item-text { margin: 8px 0; word-wrap: break-word; white-space: pre-wrap; color: #374151; }
+    .item-timestamp { font-size: 0.75em; color: #6b7280; text-align: right; margin-top: 10px; }
+    .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out;}
+    .item-card:hover .item-actions { opacity: 1; }
+    .item-actions button { background: none; border: none; padding: 4px; cursor: pointer; color: #4b5563; }
+    .item-actions button:hover { color: #1f2937; }
+    .item-actions svg { width: 18px; height: 18px; }
+    .pin-btn.pinned { color: #f59e0b; }
 
-        /* Saved Item Styles */
-        .item-card { border: 1px solid #e5e7eb; padding: 15px; margin-bottom: 15px; border-radius: 8px; background-color: #ffffff; position: relative; }
-        .item-img-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-        .item-img { max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; cursor: pointer; }
-        .item-text { margin: 8px 0; word-wrap: break-word; white-space: pre-wrap; color: #374151; }
-        .item-timestamp { font-size: 0.75em; color: #6b7280; text-align: right; margin-top: 10px; }
-        .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out;}
-        .item-card:hover .item-actions { opacity: 1; }
-        .item-actions button { background: none; border: none; padding: 4px; cursor: pointer; color: #4b5563; }
-        .item-actions button:hover { color: #1f2937; }
-        .item-actions svg { width: 18px; height: 18px; }
-
-        /* Form Input Styles */
-        label { font-weight: 600; margin-bottom: 4px; display: block; font-size: 0.875rem; color: #374151; }
-        .input-group { position: relative; display: flex; align-items: center; } /* For textarea + mic */
-        .input-group textarea { flex-grow: 1; /* Textarea takes up space */ }
-
-        input[type="text"], input[type="file"], textarea {
-             border: 1px solid #d1d5db; border-radius: 6px; padding: 8px 12px; width: 100%; margin-top: 4px;
-             transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-        input[type="text"]:focus, textarea:focus {
-            border-color: #10b981; outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
-        input[type="file"] { padding: 5px; }
-        .file-input-style {
-             display: block; width: 100%; text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-gray-300 rounded-md p-2;
-        }
-        .form-field { margin-bottom: 1rem; /* Consistent spacing */ }
-        .helper-text { font-size: 0.8em; color: #6b7280; margin-top: 3px; display: block;}
-
-    </style>
+    /* Form Input Styles */
+    label { font-weight: 600; margin-bottom: 4px; display: block; font-size: 0.875rem; color: #374151; }
+    .input-group { position: relative; display: flex; align-items: center; }
+    .input-group textarea { flex-grow: 1; }
+    input[type="text"], input[type="file"], textarea {
+        border: 1px solid #d1d5db; border-radius: 6px; padding: 8px 12px; width: 100%; margin-top: 4px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+    input[type="text"]:focus, textarea:focus {
+        border-color: #10b981; outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+    input[type="file"] { padding: 5px; }
+    .file-input-style {
+        display: block; width: 100%; text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer border border-gray-300 rounded-md p-2;
+    }
+    .form-field { margin-bottom: 1rem; }
+    .helper-text { font-size: 0.8em; color: #6b7280; margin-top: 3px; display: block;}
+</style>
 </head>
 <body>
-    <!-- Input Trigger Area -->
-    <div class="card">
-        <div id="inputTrigger">
-            <span>Into the Mind...</span> <!-- Text Corrected -->
-             <!-- Heroicon name: outline/clipboard-list -->
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
-            </svg>
-            <!-- Heroicon name: outline/document-text -->
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <!-- Heroicon name: outline/photograph -->
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-        </div>
-
-        <!-- Full Content Form (Initially Hidden) -->
-        <div id="contentFormWrapper" class="card -mt-5 border-t pt-5 rounded-t-none shadow-none border-gray-200">
-            <form id="contentForm">
-                <input type="hidden" id="editItemId" value="">
-
-                <!-- Pictures Input -->
-                <div class="form-field">
-                    <label for="pictures">Pictures (Optional):</label>
-                    <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="file-input-style">
-                    <p id="fileHelper" class="helper-text">Upload one or more images (Max 10MB each).</p>
-                    <div id="existingImages" class="mt-2 item-img-container"></div>
-                    <p id="fileError" class="error"></p>
-                </div>
-
-                <!-- Notes Input -->
-                <div class="form-field">
-                    <label for="notes">Notes:</label>
-                    <div class="input-group">
-                         <textarea id="notes" name="notes" rows="4"></textarea>
-                         <button type="button" id="notesMicBtn" class="mic-btn" title="Record Notes">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                            </svg>
-                         </button>
-                    </div>
-                    <p id="notesHelper" class="helper-text">Add your thoughts or details.</p>
-                    <p id="notesError" class="error"></p>
-                </div>
-
-                <!-- Ideas Input -->
-                <div class="form-field">
-                    <label for="ideas">Ideas:</label>
-                     <div class="input-group">
-                        <textarea id="ideas" name="ideas" rows="3"></textarea>
-                        <button type="button" id="ideasMicBtn" class="mic-btn" title="Record Ideas">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                            </svg>
-                         </button>
-                     </div>
-                    <p id="ideasHelper" class="helper-text">Jot down related ideas or actions.</p>
-                    <p id="ideasError" class="error"></p>
-                </div>
-
-                <!-- Submission Area -->
-                <div id="spinner" class="spinner"></div>
-                <p id="statusMessage" class="text-center text-sm my-3"></p>
-                <div class="flex justify-end gap-3 mt-4">
-                     <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
-                     <button type="submit" id="submitBtn" class="btn">Save</button>
-                </div>
-            </form>
-        </div>
+    <div class="header">Ami's Mind</div>
+<!-- Input Trigger Area -->
+<div class="card">
+    <div id="inputTrigger">
+        <!-- Notes Icon -->
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <!-- Picture Icon -->
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
     </div>
 
+    <!-- Full Content Form (Initially Hidden) -->
+    <div id="contentFormWrapper" class="card -mt-5 border-t pt-5 rounded-t-none shadow-none border-gray-200">
+        <form id="contentForm">
+            <input type="hidden" id="editItemId" value="">
 
-    <!-- Saved Items Area -->
-    <div class="card">
-        <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Saved Items</h2>
-        <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-5 shadow-sm" placeholder="Search notes and ideas...">
-        <div id="itemsList">
-            <p id="loadingMessage" class="text-center text-gray-500 mt-4">Loading items...</p>
-        </div>
+            <!-- Pictures Input -->
+            <div class="form-field">
+                <label for="pictures">Pictures (Optional):</label>
+                <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="file-input-style">
+                <p id="fileHelper" class="helper-text">Upload one or more images (Max 10MB each).</p>
+                <div id="existingImages" class="mt-2 item-img-container"></div>
+                <p id="fileError" class="error"></p>
+            </div>
+
+            <!-- Notes Input -->
+            <div class="form-field">
+                <label for="notes">Notes:</label>
+                <div class="input-group">
+                    <textarea id="notes" name="notes" rows="4"></textarea>
+                    <button type="button" id="notesMicBtn" class="mic-btn" title="Record Notes">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </button>
+                </div>
+                <p id="notesHelper" class="helper-text">Add your thoughts or details.</p>
+                <p id="notesError" class="error"></p>
+            </div>
+
+            <!-- Submission Area -->
+            <div id="spinner" class="spinner"></div>
+            <p id="statusMessage" class="text-center text-sm my-3"></p>
+            <div class="flex justify-end gap-3 mt-4">
+                <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
+                <button type="submit" id="submitBtn" class="btn">Save</button>
+            </div>
+        </form>
     </div>
+</div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<!-- Saved Items Area -->
+<div class="card">
+    <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Saved Items</h2>
+    <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-5 shadow-sm" placeholder="Search notes...">
+    <div id="itemsList">
+        <p id="loadingMessage" class="text-center text-gray-500 mt-4">Loading items...</p>
+    </div>
+</div>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
-    // IMPORTANT: Replace with your Firebase configuration & Secure Rules!
+    // Firebase Configuration
     const firebaseConfig = {
-  apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
-  authDomain: "amis-s-mind.firebaseapp.com",
-  databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
-  projectId: "amis-s-mind",
-  storageBucket: "amis-s-mind.firebasestorage.app",
-  messagingSenderId: "759504870947",
-  appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
-  measurementId: "G-EZFTKMB4Z6"
-};
-
-    // Initialize Firebase
+        apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
+        authDomain: "amis-s-mind.firebaseapp.com",
+        databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
+        projectId: "amis-s-mind",
+        storageBucket: "amis-s-mind.firebasestorage.app",
+        messagingSenderId: "759504870947",
+        appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
+        measurementId: "G-EZFTKMB4Z6"
+    };
+// Initialize Firebase
     try {
-        if (!firebase.apps.length) { // Prevent re-initialization
-             firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
-    } catch (e) { console.error("Firebase init error:", e); alert("Could not initialize Firebase."); }
+    } catch (e) {
+        console.error("Firebase init error:", e);
+        alert("Could not initialize Firebase.");
+    }
     const db = firebase.firestore();
     const storage = firebase.storage();
 
@@ -200,15 +199,13 @@
     const MAX_FILE_SIZE_MB = 10;
     const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-    // DOM elements
+    // DOM Elements
     const inputTrigger = document.getElementById('inputTrigger');
     const contentFormWrapper = document.getElementById('contentFormWrapper');
     const contentForm = document.getElementById('contentForm');
     const picturesInput = document.getElementById('pictures');
     const notesTextarea = document.getElementById('notes');
-    const ideasTextarea = document.getElementById('ideas');
     const notesMicBtn = document.getElementById('notesMicBtn');
-    const ideasMicBtn = document.getElementById('ideasMicBtn');
     const spinner = document.getElementById('spinner');
     const statusMessage = document.getElementById('statusMessage');
     const submitButton = document.getElementById('submitBtn');
@@ -217,128 +214,97 @@
     const existingImagesDiv = document.getElementById('existingImages');
     const fileError = document.getElementById('fileError');
     const notesError = document.getElementById('notesError');
-    const ideasError = document.getElementById('ideasError');
     const itemsList = document.getElementById('itemsList');
     const searchBar = document.getElementById('searchBar');
     const loadingMessage = document.getElementById('loadingMessage');
 
-    // --- Input Trigger Logic ---
+    // Input Trigger Logic
     inputTrigger.addEventListener('click', () => {
         contentFormWrapper.style.display = 'block';
         inputTrigger.style.display = 'none';
         notesTextarea.focus();
-        resetForm(true); // Open fresh form
+        resetForm(true);
     });
-
-    cancelButton.addEventListener('click', () => {
-        closeForm();
-    });
+cancelButton.addEventListener('click', closeForm);
 
     function closeForm() {
         contentFormWrapper.style.display = 'none';
         inputTrigger.style.display = 'flex';
-        resetForm(false); // Reset without focusing
+        resetForm(false);
     }
 
     function resetForm(focusNotes = false) {
-        stopSpeechRecognition(); // Stop any active speech rec
+        stopSpeechRecognition();
         contentForm.reset();
         editItemIdInput.value = '';
         submitButton.textContent = 'Save';
         submitButton.disabled = false;
         cancelButton.disabled = false;
         spinner.style.display = 'none';
-        setStatusMessage('', false); // Clear status
+        setStatusMessage('', false);
         fileError.textContent = '';
         notesError.textContent = '';
-        ideasError.textContent = '';
         existingImagesDiv.innerHTML = '';
         picturesInput.value = null;
-        picturesInput.disabled = false; // Ensure file input is enabled for new entries
+        picturesInput.disabled = false;
         document.getElementById('fileHelper').textContent = 'Upload one or more images (Max 10MB each).';
-        if (focusNotes) {
-            notesTextarea.focus();
-        }
+        if (focusNotes) notesTextarea.focus();
     }
 
-     function setStatusMessage(message, isSuccess) {
+    function setStatusMessage(message, isSuccess) {
         statusMessage.textContent = message;
-        statusMessage.className = 'text-center text-sm my-3'; // Reset
-        if (message) {
-            statusMessage.classList.add(isSuccess ? 'success' : 'error');
-        }
+        statusMessage.className = 'text-center text-sm my-3';
+        if (message) statusMessage.classList.add(isSuccess ? 'success' : 'error');
     }
 
-    // --- Speech Recognition Setup ---
+    // Speech Recognition Setup
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let notesRecognition = null;
-    let ideasRecognition = null;
-    let activeRecognition = null; // Holds the currently active recognition instance
-    let activeMicButton = null; // Holds the currently active mic button element
+    let activeRecognition = null;
+    let activeMicButton = null;
 
     function setupSpeechRecognitionInstance(textarea, micButton) {
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = false;
-
         recognition.onresult = (event) => {
             let transcript = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    transcript += event.results[i][0].transcript;
-                }
+                if (event.results[i].isFinal) transcript += event.results[i][0].transcript;
             }
             textarea.value += (textarea.value.length > 0 ? ' ' : '') + transcript.trim();
         };
-
         recognition.onerror = (event) => {
             console.error('Speech recognition error:', event.error);
-            alert(`Speech recognition error: ${event.error}. Please ensure microphone permission is granted.`);
-            stopSpeechRecognition(); // Reset state on error
+            alert(`Speech recognition error: ${event.error}.`);
+            stopSpeechRecognition();
         };
-
         recognition.onstart = () => {
             console.log('Speech recognition started for:', micButton.id);
             micButton.classList.add('pulsing');
-            activeRecognition = recognition; // Mark this instance as active
-            activeMicButton = micButton; // Mark this button as active
-
-            // Disable the *other* mic button
-            if (micButton === notesMicBtn) ideasMicBtn.disabled = true;
-            else if (micButton === ideasMicBtn) notesMicBtn.disabled = true;
+            activeRecognition = recognition;
+            activeMicButton = micButton;
         };
-
         recognition.onend = () => {
             console.log('Speech recognition stopped.');
-             // Check if this instance was the one that was active before resetting UI
-             if (activeRecognition === recognition) {
-                 if (activeMicButton) {
-                     activeMicButton.classList.remove('pulsing');
-                 }
-                 activeRecognition = null;
-                 activeMicButton = null;
-                 // Re-enable both buttons
-                 if (notesMicBtn) notesMicBtn.disabled = false;
-                 if (ideasMicBtn) ideasMicBtn.disabled = false;
-             }
+            if (activeRecognition === recognition) {
+                if (activeMicButton) activeMicButton.classList.remove('pulsing');
+                activeRecognition = null;
+                activeMicButton = null;
+                if (notesMicBtn) notesMicBtn.disabled = false;
+            }
         };
         return recognition;
     }
 
-     function stopSpeechRecognition() {
+    function stopSpeechRecognition() {
         if (activeRecognition) {
             activeRecognition.stop();
-            // onend handler will reset UI state
         } else {
-            // Explicitly reset UI just in case state is inconsistent
-            if(notesMicBtn) {
+            if (notesMicBtn) {
                 notesMicBtn.classList.remove('pulsing');
                 notesMicBtn.disabled = false;
             }
-             if(ideasMicBtn) {
-                ideasMicBtn.classList.remove('pulsing');
-                ideasMicBtn.disabled = false;
-             }
             activeRecognition = null;
             activeMicButton = null;
         }
@@ -346,60 +312,63 @@
 
     if (SpeechRecognition) {
         notesRecognition = setupSpeechRecognitionInstance(notesTextarea, notesMicBtn);
-        ideasRecognition = setupSpeechRecognitionInstance(ideasTextarea, ideasMicBtn);
-
         notesMicBtn.addEventListener('click', () => {
             if (activeRecognition === notesRecognition) {
-                stopSpeechRecognition(); // Stop if already active for notes
+                stopSpeechRecognition();
             } else {
-                stopSpeechRecognition(); // Stop any other active recognition first
-                try { notesRecognition.start(); } catch(e) { console.error("Error starting notes recognition:", e); alert("Could not start speech recognition."); stopSpeechRecognition();}
+                stopSpeechRecognition();
+                try {
+                    notesRecognition.start();
+                } catch (e) {
+                    console.error("Error starting notes recognition:", e);
+                    alert("Could not start speech recognition.");
+                    stopSpeechRecognition();
+                }
             }
         });
-
-        ideasMicBtn.addEventListener('click', () => {
-             if (activeRecognition === ideasRecognition) {
-                stopSpeechRecognition(); // Stop if already active for ideas
-            } else {
-                stopSpeechRecognition(); // Stop any other active recognition first
-                try { ideasRecognition.start(); } catch(e) { console.error("Error starting ideas recognition:", e); alert("Could not start speech recognition."); stopSpeechRecognition();}
-            }
-        });
-
     } else {
         console.warn('Speech recognition not supported.');
-        [notesMicBtn, ideasMicBtn].forEach(btn => { if(btn) btn.style.display = 'none'; }); // Hide buttons
+        if (notesMicBtn) notesMicBtn.style.display = 'none';
         notesTextarea.placeholder = "Speech recognition not supported.";
-        ideasTextarea.placeholder = "Speech recognition not supported.";
     }
 
-
-    // --- Data Fetching and Display ---
-    let allItems = [];
+    // Data Fetching and Display
+let allItems = [];
     const unsubscribe = db.collection('pictures')
         .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
             loadingMessage.style.display = 'none';
-            allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            allItems = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : null
+            }));
             displayItems();
-        }, (error) => { /* ... error handling ... */ });
+        }, (error) => {
+            console.error("Firestore snapshot error:", error);
+            loadingMessage.textContent = "Failed to load items.";
+        });
 
     function displayItems() {
         const searchTerm = searchBar.value.toLowerCase().trim();
-        // Filter logic remains the same...
-        const filteredItems = allItems.filter(item => {
-            const notes = (item.notes || '').toLowerCase();
-            const ideas = (item.ideas || '').toLowerCase();
-            const timestampString = item.timestamp && typeof item.timestamp.toDate === 'function' ? item.timestamp.toDate().toLocaleString() : '';
-            return notes.includes(searchTerm) || ideas.includes(searchTerm) || timestampString.includes(searchTerm);
+        allItems.sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            if (a.pinned && b.pinned) return b.timestamp - a.timestamp;
+            return b.timestamp - a.timestamp;
         });
 
-        itemsList.innerHTML = ''; // Clear previous items
+        const filteredItems = allItems.filter(item => {
+            const notes = (item.notes || '').toLowerCase();
+            const timestampString = item.timestamp ? item.timestamp.toLocaleString() : '';
+            return notes.includes(searchTerm) || timestampString.includes(searchTerm);
+        });
 
+        itemsList.innerHTML = '';
         if (allItems.length === 0 && loadingMessage.style.display === 'none') {
-             itemsList.innerHTML = '<p class="text-center text-gray-500">No items saved yet.</p>';
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items saved yet.</p>';
         } else if (filteredItems.length === 0 && allItems.length > 0) {
-             itemsList.innerHTML = '<p class="text-center text-gray-500">No items match your search.</p>';
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items match your search.</p>';
         }
 
         filteredItems.forEach((item) => {
@@ -408,95 +377,110 @@
             itemElement.setAttribute('data-id', item.id);
 
             let imagesHtml = '';
-            // Image display (only if pictureUrls exist and is an array)
             if (Array.isArray(item.pictureUrls) && item.pictureUrls.length > 0) {
                 imagesHtml = `<div class="item-img-container">` +
                              item.pictureUrls.map(url => `<img src="${url}" alt="Uploaded Picture" class="item-img" onclick="window.open('${url}', '_blank')">`).join('') +
                              `</div>`;
             }
 
-            const timestampStr = item.timestamp && typeof item.timestamp.toDate === 'function'
-                               ? new Date(item.timestamp.toDate()).toLocaleString() : 'Unknown time';
-            const notesText = escapeHtml(item.notes || 'N/A');
-            const ideasText = escapeHtml(item.ideas || 'N/A');
+            const timestampStr = item.timestamp ? new Date(item.timestamp).toLocaleString() : 'Unknown time';
+            const notesText = escapeHtml(item.notes) || 'No notes';
 
             itemElement.innerHTML = `
                 <div class="item-actions">
+                    <button class="pin-btn ${item.pinned ? 'pinned' : ''}" title="${item.pinned ? 'Unpin' : 'Pin'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5l-3 3-3-3m3 3v10m0-10h-3m3 0h3" />
+                        </svg>
+                    </button>
                     <button class="edit-btn" title="Edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
                     </button>
                     <button class="delete-btn" title="Delete">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                     </button>
                 </div>
                 ${imagesHtml}
-                <p class="item-text"><strong>Notes:</strong><br>${notesText}</p>
-                <p class="item-text"><strong>Ideas:</strong><br>${ideasText}</p>
+                <p class="item-text"><strong>Notes:</strong> ${notesText}</p>
                 <p class="item-timestamp">${timestampStr}</p>
             `;
             itemsList.appendChild(itemElement);
         });
     }
 
-    function escapeHtml(unsafe) { /* ... same as before ... */ }
+    function escapeHtml(unsafe) {
+        if (typeof unsafe !== 'string') return '';
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     searchBar.addEventListener('input', displayItems);
 
-
-    // --- Edit and Delete Logic ---
-    itemsList.addEventListener('click', async (e) => {
+    // Edit, Delete, and Pin Logic
+itemsList.addEventListener('click', async (e) => {
+        const pinButton = e.target.closest('.pin-btn');
         const editButton = e.target.closest('.edit-btn');
         const deleteButton = e.target.closest('.delete-btn');
-        if (editButton) {
-             const itemId = editButton.closest('.item-card')?.dataset.id;
-             if (itemId) handleEditClick(itemId);
+
+        if (pinButton) {
+            const itemId = pinButton.closest('.item-card')?.dataset.id;
+            if (itemId) handlePinClick(itemId);
+        } else if (editButton) {
+            const itemId = editButton.closest('.item-card')?.dataset.id;
+            if (itemId) handleEditClick(itemId);
         } else if (deleteButton) {
-             const itemId = deleteButton.closest('.item-card')?.dataset.id;
-             if (itemId) handleDeleteClick(itemId);
+            const itemId = deleteButton.closest('.item-card')?.dataset.id;
+            if (itemId) handleDeleteClick(itemId);
         }
     });
 
+    async function handlePinClick(itemId) {
+        const item = allItems.find(item => item.id === itemId);
+        if (!item) return;
+        const newPinnedState = !item.pinned;
+        try {
+            await db.collection('pictures').doc(itemId).update({ pinned: newPinnedState });
+        } catch (error) {
+            console.error('Error pinning item:', error);
+            alert('Failed to pin/unpin item.');
+        }
+    }
+
     function handleEditClick(itemId) {
         const itemToEdit = allItems.find(item => item.id === itemId);
-        if (!itemToEdit) { /* ... error handling ... */ return; }
-
-        resetForm(false); // Reset but don't focus yet
+        if (!itemToEdit) return;
+        resetForm(false);
         editItemIdInput.value = itemId;
         notesTextarea.value = itemToEdit.notes || '';
-        ideasTextarea.value = itemToEdit.ideas || '';
         submitButton.textContent = 'Update';
         existingImagesDiv.innerHTML = '';
-
-        // Display existing images (if any)
         if (Array.isArray(itemToEdit.pictureUrls) && itemToEdit.pictureUrls.length > 0) {
-             existingImagesDiv.innerHTML = '<p class="text-sm text-gray-600 mb-2">Current images:</p>' +
+            existingImagesDiv.innerHTML = '<p class="text-sm text-gray-600 mb-2">Current images:</p>' +
                 itemToEdit.pictureUrls.map(url => `<img src="${url}" alt="Existing Picture" class="item-img">`).join('');
         }
-
-        // Disable picture input during edit (simplification for now)
         picturesInput.disabled = true;
         document.getElementById('fileHelper').textContent = 'Image uploads are disabled during edit.';
-
         contentFormWrapper.style.display = 'block';
         inputTrigger.style.display = 'none';
         contentFormWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
         notesTextarea.focus();
     }
-
-    async function handleDeleteClick(itemId) {
-        const itemToDelete = allItems.find(item => item.id === itemId);
-        // Confirmation...
+    const itemToDelete = allItems.find(item => item.id === itemId);
         if (!confirm(`Are you sure you want to delete this item?\n\nNotes: ${(itemToDelete?.notes || '').substring(0, 50)}...`)) return;
-
         const cardElement = itemsList.querySelector(`.item-card[data-id="${itemId}"]`);
         if (cardElement) cardElement.style.opacity = '0.5';
         showSpinner('Deleting...');
-
         try {
-            // Delete Firestore doc
             await db.collection('pictures').doc(itemId).delete();
-             setStatusMessage('Deleting associated images...', false);
-
-            // Delete associated images from Storage (if they exist)
+            setStatusMessage('Deleting associated images...', false);
             if (Array.isArray(itemToDelete?.pictureUrls) && itemToDelete.pictureUrls.length > 0) {
                 const deletePromises = itemToDelete.pictureUrls.map(async (url) => {
                     try {
@@ -504,130 +488,143 @@
                             const storageRef = storage.refFromURL(url);
                             await storageRef.delete();
                         }
-                    } catch (storageError) { console.error("Error deleting storage file:", url, storageError); /* Handle partial failure */ }
+                    } catch (storageError) {
+                        console.error("Error deleting storage file:", url, storageError);
+                    }
                 });
                 await Promise.all(deletePromises);
             }
-             setStatusMessage('Item deleted successfully.', true);
-             // UI updates via onSnapshot
-
+            setStatusMessage('Item deleted successfully.', true);
         } catch (error) {
             handleError(error, "Failed to delete the item.");
             if (cardElement) cardElement.style.opacity = '1';
         } finally {
-             hideSpinner();
-             setTimeout(() => setStatusMessage('', false), 4000);
+            hideSpinner();
+            setTimeout(() => setStatusMessage('', false), 4000);
         }
     }
-
-    function showSpinner(message = 'Processing...') { /* ... */ }
-    function hideSpinner() { /* ... */ }
-
-
-    // --- Form Submission (Save/Update) ---
+// Form Submission (Save/Update)
     contentForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        stopSpeechRecognition(); // Stop speech before submitting
-
+        stopSpeechRecognition();
         const editingItemId = editItemIdInput.value;
         const isEditing = !!editingItemId;
         const notes = notesTextarea.value.trim();
-        const ideas = ideasTextarea.value.trim();
         const files = picturesInput.files;
 
-        // Clear errors
-        fileError.textContent = ''; notesError.textContent = ''; ideasError.textContent = '';
+        fileError.textContent = '';
+        notesError.textContent = '';
         setStatusMessage('', false);
 
-        // Validation
         let isValid = true;
-        let pictureUrls = []; // Default to empty array
+        let pictureUrls = [];
         let hasFilesToUpload = files.length > 0;
 
-        // Basic text validation
-        if (!notes) { notesError.textContent = 'Please enter some notes.'; isValid = false; }
-        // Ideas still optional
+        if (!notes) {
+            notesError.textContent = 'Please enter some notes.';
+            isValid = false;
+        }
 
-         // File validation ONLY IF files are selected
-         if (!isEditing && hasFilesToUpload) {
+        if (!isEditing && hasFilesToUpload) {
             for (let file of files) {
-                if (!file.type.startsWith('image/')) { fileError.textContent = 'Please upload image files only.'; isValid = false; break; }
-                if (file.size > MAX_FILE_SIZE_BYTES) { fileError.textContent = `Each file must be less than ${MAX_FILE_SIZE_MB} MB.`; isValid = false; break; }
+                if (!file.type.startsWith('image/')) {
+                    fileError.textContent = 'Please upload image files only.';
+                    isValid = false;
+                    break;
+                }
+                if (file.size > MAX_FILE_SIZE_BYTES) {
+                    fileError.textContent = `Each file must be less than ${MAX_FILE_SIZE_MB} MB.`;
+                     isValid = false;
+                    break;
+                }
             }
         } else if (isEditing) {
-            // Keep existing URLs if editing
-             const currentItem = allItems.find(item => item.id === editingItemId);
-             pictureUrls = currentItem?.pictureUrls || []; // Use existing or empty array
-             hasFilesToUpload = false; // Don't re-upload during edit
+            const currentItem = allItems.find(item => item.id === editingItemId);
+            pictureUrls = currentItem?.pictureUrls || [];
+            hasFilesToUpload = false;
         }
 
         if (!isValid) return;
 
-        // Start submission
         showSpinner(isEditing ? 'Updating...' : 'Saving...');
-        submitButton.disabled = true; cancelButton.disabled = true;
+        submitButton.disabled = true;
+        cancelButton.disabled = true;
 
         try {
-            // --- Upload files IF saving new AND files were selected ---
             if (!isEditing && hasFilesToUpload) {
-                 setStatusMessage('Uploading pictures...', false);
-                 const uploadPromises = Array.from(files).map(file => { /* ... same upload promise logic ... */
+                setStatusMessage('Uploading pictures...', false);
+                const uploadPromises = Array.from(files).map(file => {
                     const filePath = `pictures/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
                     const storageRef = storage.ref(filePath);
                     const uploadTask = storageRef.put(file);
                     return new Promise((resolve, reject) => {
-                        uploadTask.on('state_changed', (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setStatusMessage(`Uploading ${file.name}: ${Math.round(progress)}%`, false);
-                         }, reject, // Error
-                         async () => { // Complete
-                             try { resolve(await uploadTask.snapshot.ref.getDownloadURL()); }
-                             catch (urlError) { reject(urlError); }
-                         }
-                       );
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                setStatusMessage(`Uploading ${file.name}: ${Math.round(progress)}%`, false);
+                            },
+                            reject,
+                            async () => {
+                                try {
+                                    resolve(await uploadTask.snapshot.ref.getDownloadURL());
+                                } catch (urlError) {
+                                    reject(urlError);
+                                }
+                            }
+                        );
                     });
-                 });
-                 pictureUrls = await Promise.all(uploadPromises); // Get URLs after upload
+                });
+                pictureUrls = await Promise.all(uploadPromises);
             }
-             // --- Save or Update Firestore ---
-             setStatusMessage(isEditing ? 'Updating data...' : 'Saving data...', false);
-             const dataToSave = {
-                notes: notes,
-                ideas: ideas,
-                pictureUrls: pictureUrls, // Contains new URLs or existing URLs (or empty)
-                // Only set timestamp when creating new
-                ...( !isEditing && { timestamp: firebase.firestore.FieldValue.serverTimestamp() })
-             };
-
+setStatusMessage(isEditing ? 'Updating data...' : 'Saving data...', false);
             if (isEditing) {
-                // Update only specified fields (preserves original timestamp)
-                await db.collection('pictures').doc(editingItemId).update(dataToSave);
+                await db.collection('pictures').doc(editingItemId).update({ notes: notes });
                 setStatusMessage('Updated successfully!', true);
             } else {
-                // Add new document with timestamp
-                await db.collection('pictures').add(dataToSave);
+                await db.collection('pictures').add({
+                    notes: notes,
+                    pictureUrls: pictureUrls,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    pinned: false
+                });
                 setStatusMessage('Saved successfully!', true);
             }
-
-            setTimeout(closeForm, 1500); // Close form on success
-
+            setTimeout(closeForm, 1500);
         } catch (error) {
             handleError(error, `Failed to ${isEditing ? 'update' : 'save'} item.`);
-            submitButton.disabled = false; cancelButton.disabled = false;
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
         } finally {
-             hideSpinner();
-              // Re-enable buttons only if not closing automatically on success
-             if (!statusMessage.classList.contains('success')) {
-                submitButton.disabled = false; cancelButton.disabled = false;
-             }
+            hideSpinner();
+            if (!statusMessage.classList.contains('success')) {
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
+            }
         }
     });
 
-    // Generic Error Handler
-    function handleError(error, specificContext = "An operation failed.") { /* ... same as before ... */ }
+    function showSpinner(message = 'Processing...') {
+        spinner.style.display = 'block';
+        setStatusMessage(message, false);
+    }
 
+    function hideSpinner() {
+        spinner.style.display = 'none';
+    }
+
+    function handleError(error, specificContext = "An operation failed.") {
+        console.error(`${specificContext}:`, error);
+        setStatusMessage(`${specificContext} ${error.message || 'Unknown error.'}`, false);
+    }
 </script>
 </body>
 </html>
 </xaiArtifact>
+
+
+
+
+
+
+
 
