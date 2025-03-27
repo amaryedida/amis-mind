@@ -10,21 +10,20 @@
         /* General Styles */
         body { background-color: #f3f4f6; font-family: sans-serif; }
         .app-heading {
-            text-align: center; font-size: 2.5rem; /* Larger */ font-weight: bold;
-            color: #374151; /* Gray-700 */ margin-top: 2rem; margin-bottom: 0.5rem; /* Space */
-            /* Optional: Gradient text */
-             background: linear-gradient(to right, #10b981, #3b82f6);
+            text-align: center; font-size: 2.5rem; font-weight: bold;
+            color: #374151; margin-top: 2rem; margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #10b981, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .card { max-width: 650px; margin: 15px auto; padding: 25px; background-color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .trigger-card { margin-top: 0; } /* Reduce top margin for trigger */
+        .trigger-card { margin-top: 0; }
 
         /* Input Trigger Styles */
         #inputTrigger {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center content horizontally */
+            justify-content: center;
             padding: 12px 16px;
             border: 1px solid #d1d5db;
             border-radius: 8px;
@@ -38,18 +37,18 @@
         }
         #inputTrigger span {
             color: #6b7280;
-            margin-right: 16px; /* Add spacing between text and icons */
-            font-size: 1.25rem; /* Slightly larger text */
+            margin-right: 16px;
+            font-size: 1.25rem;
         }
         #inputTrigger .icon-group {
             display: flex;
             align-items: center;
-            gap: 20px; /* Add spacing between icons */
+            gap: 20px;
         }
         #inputTrigger .icon {
             color: #4b5563;
-            width: 40px; /* Larger icon size */
-            height: 40px; /* Larger icon size */
+            width: 40px;
+            height: 40px;
             flex-shrink: 0;
             transition: color 0.2s ease;
         }
@@ -84,26 +83,22 @@
 
         /* Saved Item Styles */
         .item-card { border: 1px solid #e5e7eb; padding: 15px; margin-bottom: 15px; border-radius: 8px; background-color: #ffffff; position: relative; }
-        .item-content-wrapper { cursor: pointer; } /* Make content area clickable */
+        .item-content-wrapper { cursor: pointer; }
         .item-img-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
         .item-img { max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
         .item-notes-preview {
             margin: 8px 0; color: #374151; line-height: 1.5;
-            overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; /* Show ~4 lines */
+            overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4;
            -webkit-box-orient: vertical; text-overflow: ellipsis;
         }
         .item-timestamp { font-size: 0.75em; color: #6b7280; text-align: right; margin-top: 10px; }
-        .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 10;} /* Ensure actions on top */
+        .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 10;}
         .item-card:hover .item-actions { opacity: 1; }
         .item-actions button { background: none; border: none; padding: 4px; cursor: pointer; color: #4b5563; }
         .item-actions button:hover { color: #1f2937; }
         .item-actions svg { width: 18px; height: 18px; }
-        .item-actions .pin-btn {
-            color: #f59e0b; /* Amber-500 */
-        }
-        .item-actions .pin-btn:hover {
-            color: #d97706; /* Amber-600 */
-        }
+        .item-actions .pin-btn { color: #f59e0b; }
+        .item-actions .pin-btn:hover { color: #d97706; }
 
         /* Form Input Styles */
         label { font-weight: 600; margin-bottom: 4px; display: block; font-size: 0.875rem; color: #374151; }
@@ -132,8 +127,8 @@
 
         #itemsList {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
-            gap: 15px; /* Spacing between grid items */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
         }
         .item-card {
             display: flex;
@@ -144,18 +139,16 @@
 </head>
 <body>
 
-    <h1 class="app-heading">Ami's Mind</h1> <!-- Added Heading -->
+    <h1 class="app-heading">Ami's Mind</h1>
 
     <!-- Input Trigger Area -->
     <div class="card trigger-card">
         <div id="inputTrigger">
             <span>Into the Mind...</span>
             <div class="icon-group">
-                <!-- Notes Icon -->
                 <svg id="notesIconTrigger" class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="New Note">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <!-- Picture Icon -->
                 <svg id="pictureIconTrigger" class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" title="New Note with Picture">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -168,7 +161,6 @@
                 <input type="hidden" id="editItemId" value="">
                 <input type="hidden" id="entryMode" value="">
 
-                <!-- Pictures Input (Conditionally Shown) -->
                 <div id="picturesFormField" class="form-field hidden">
                     <label id="picturesLabel" for="pictures">Pictures</label>
                     <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="file-input-style">
@@ -177,7 +169,6 @@
                     <p id="fileError" class="error"></p>
                 </div>
 
-                <!-- Notes Input (Always Shown) -->
                 <div class="form-field">
                     <label id="notesLabel" for="notes">Notes:</label>
                     <div class="input-group">
@@ -190,7 +181,6 @@
                     <p id="notesError" class="error"></p>
                 </div>
 
-                <!-- Submission Area -->
                 <div id="spinner" class="spinner"></div>
                 <p id="statusMessage" class="text-center text-sm my-3"></p>
                 <div class="flex justify-end gap-3 mt-4">
@@ -201,11 +191,10 @@
         </div>
     </div>
 
-
     <!-- Saved Items Area -->
     <div class="card">
         <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Saved Items</h2>
-        <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-5 shadow-sm" placeholder="Search notes..."> <!-- Updated Placeholder -->
+        <input type="text" id="searchBar" class="w-full p-2 border border-gray-300 rounded-md mb-5 shadow-sm" placeholder="Search notes...">
         <div id="itemsList">
             <p id="loadingMessage" class="text-center text-gray-500 mt-4">Loading items...</p>
         </div>
@@ -224,36 +213,30 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
-    // IMPORTANT: Replace with your Firebase configuration & Secure Rules!
     const firebaseConfig = {
-  apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
-  authDomain: "amis-s-mind.firebaseapp.com",
-  databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
-  projectId: "amis-s-mind",
-  storageBucket: "amis-s-mind.firebasestorage.app",
-  messagingSenderId: "759504870947",
-  appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
-  measurementId: "G-EZFTKMB4Z6"
-};
+        apiKey: "AIzaSyBq3ND6irGFsZYgl95Atf5gm62sFcW-R_Y",
+        authDomain: "amis-s-mind.firebaseapp.com",
+        databaseURL: "https://amis-s-mind-default-rtdb.firebaseio.com",
+        projectId: "amis-s-mind",
+        storageBucket: "amis-s-mind.firebasestorage.app",
+        messagingSenderId: "759504870947",
+        appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
+        measurementId: "G-EZFTKMB4Z6"
+    };
 
-    // Initialize Firebase
-   // Initialize Firebase
-   try {
-    firebase.initializeApp(firebaseConfig);
-} catch (e) {
-    console.error("Firebase initialization error:", e);
-}
+    try {
+        firebase.initializeApp(firebaseConfig);
+    } catch (e) {
+        console.error("Firebase initialization error:", e);
+    }
     const db = firebase.firestore();
     const storage = firebase.storage();
 
-    // Constants
     const MAX_FILE_SIZE_MB = 10;
     const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
-    const NOTE_PREVIEW_LENGTH = 150; // Max characters for preview
+    const NOTE_PREVIEW_LENGTH = 150;
 
-    // --- DOM elements ---
     const inputTrigger = document.getElementById('inputTrigger');
-    // const listIconTrigger = document.getElementById('listIconTrigger'); // REMOVED
     const notesIconTrigger = document.getElementById('notesIconTrigger');
     const pictureIconTrigger = document.getElementById('pictureIconTrigger');
     const contentFormWrapper = document.getElementById('contentFormWrapper');
@@ -278,26 +261,20 @@
     const loadingMessage = document.getElementById('loadingMessage');
     const fileHelper = document.getElementById('fileHelper');
     const notesHelper = document.getElementById('notesHelper');
-    // Modal Elements
     const viewModalOverlay = document.getElementById('viewModalOverlay');
     const viewModalContent = document.getElementById('viewModalContent');
     const viewModalCloseBtn = document.getElementById('viewModalCloseBtn');
     const modalImageContainer = document.getElementById('modalImageContainer');
     const modalNotesContent = document.getElementById('modalNotesContent');
 
-    // --- Trigger Bar Logic ---
-    // listIconTrigger.addEventListener('click', (e) => { e.stopPropagation(); openForm('list'); }); // REMOVED
     notesIconTrigger.addEventListener('click', (e) => { e.stopPropagation(); openForm('notes'); });
     pictureIconTrigger.addEventListener('click', (e) => { e.stopPropagation(); openForm('picture'); });
     inputTrigger.addEventListener('click', () => { if (contentFormWrapper.style.display === 'none') openForm('notes'); });
 
-
-    // --- Form Opening/Closing/Resetting ---
     function openForm(mode) {
         resetForm(false);
         entryModeInput.value = mode;
 
-        // Configure form based on mode ('notes', 'picture', 'edit')
         if (mode === 'notes') {
             notesLabel.textContent = 'Notes:';
             notesHelper.textContent = 'Add your thoughts or details.';
@@ -311,7 +288,6 @@
         } else if (mode === 'edit') {
              notesLabel.textContent = 'Notes:';
              notesHelper.textContent = 'Edit your notes.';
-             // Picture field visibility handled in handleEditClick
         }
 
         contentFormWrapper.style.display = 'block';
@@ -342,111 +318,111 @@
         existingImagesDiv.innerHTML = '';
         picturesInput.value = null;
         picturesInput.disabled = false;
-        // notesTextarea.classList.remove('notes-as-list'); // REMOVED list style
         picturesFormField.classList.add('hidden');
-        notesLabel.textContent = 'Notes:'; // Reset labels/helpers
+        notesLabel.textContent = 'Notes:';
         picturesLabel.textContent = 'Pictures:';
         notesHelper.textContent = 'Add your thoughts or details.';
         fileHelper.textContent = 'Upload one or more images.';
         if (focusNotes) notesTextarea.focus();
     }
 
-     function setStatusMessage(message, isSuccess) { /* ... same ... */ }
+    function setStatusMessage(message, isSuccess) {
+        statusMessage.textContent = message;
+        statusMessage.classList.remove('error', 'success');
+        statusMessage.classList.add(isSuccess ? 'success' : 'error');
+        if (message && isSuccess) setTimeout(() => statusMessage.textContent = '', 3000);
+    }
 
-    // --- Speech Recognition Setup (Only for Notes) ---
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; /* ... same setup ... */
-    let notesRecognition = null; /* ... */
-    let activeRecognition = null; /* ... */
-    let activeMicButton = null; /* ... */
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let notesRecognition = null;
+    let activeRecognition = null;
+    let activeMicButton = null;
+
     function setupSpeechRecognitionInstance(textarea, micButton) {
-    try {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = false;
+        try {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = false;
 
-        recognition.onresult = (event) => {
-            let transcript = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    transcript += event.results[i][0].transcript;
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        transcript += event.results[i][0].transcript;
+                    }
                 }
-            }
-            textarea.value += (textarea.value.length > 0 ? ' ' : '') + transcript.trim();
-            console.log('Speech recognition result:', transcript);
-        };
+                textarea.value += (textarea.value.length > 0 ? ' ' : '') + transcript.trim();
+                console.log('Speech recognition result:', transcript);
+            };
 
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error);
-            alert(`Speech recognition error: ${event.error}. Please try again.`);
-            stopSpeechRecognition();
-        };
-
-        recognition.onstart = () => {
-            console.log('Speech recognition started.');
-            micButton.classList.add('pulsing');
-            activeRecognition = recognition;
-            activeMicButton = micButton;
-        };
-
-        recognition.onend = () => {
-            console.log('Speech recognition stopped.');
-            if (activeRecognition === recognition) {
-                micButton.classList.remove('pulsing');
-                activeRecognition = null;
-                activeMicButton = null;
-            }
-        };
-
-        return recognition;
-    } catch (error) {
-        console.error('Error initializing SpeechRecognition:', error);
-        alert('Speech recognition is not supported in your browser.');
-        micButton.style.display = 'none';
-        textarea.placeholder = "Speech recognition is not supported in your browser.";
-        return null;
-    }
-}
-
-function stopSpeechRecognition() {
-    if (activeRecognition) {
-        activeRecognition.stop();
-        console.log('Speech recognition stopped manually.');
-    } else if (activeMicButton) {
-        activeMicButton.classList.remove('pulsing');
-    }
-    activeRecognition = null;
-    activeMicButton = null;
-}
-
-if (SpeechRecognition) {
-    notesRecognition = setupSpeechRecognitionInstance(notesTextarea, notesMicBtn);
-    if (notesRecognition) {
-        notesMicBtn.addEventListener('click', () => {
-            if (activeRecognition === notesRecognition) {
-                // Stop listening and stop pulsating
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                alert(`Speech recognition error: ${event.error}. Please try again.`);
                 stopSpeechRecognition();
-                notesMicBtn.classList.remove('pulsing');
-            } else {
-                // Start listening and start pulsating
-                stopSpeechRecognition();
-                try {
-                    notesRecognition.start();
-                    notesMicBtn.classList.add('pulsing');
-                } catch (e) {
-                    console.error("Error starting speech recognition:", e);
-                    alert("Could not start speech recognition. Please ensure your microphone is enabled.");
+            };
+
+            recognition.onstart = () => {
+                console.log('Speech recognition started.');
+                micButton.classList.add('pulsing');
+                activeRecognition = recognition;
+                activeMicButton = micButton;
+            };
+
+            recognition.onend = () => {
+                console.log('Speech recognition stopped.');
+                if (activeRecognition === recognition) {
+                    micButton.classList.remove('pulsing');
+                    activeRecognition = null;
+                    activeMicButton = null;
                 }
-            }
-        });
+            };
+
+            return recognition;
+        } catch (error) {
+            console.error('Error initializing SpeechRecognition:', error);
+            alert('Speech recognition is not supported in your browser.');
+            micButton.style.display = 'none';
+            textarea.placeholder = "Speech recognition is not supported in your browser.";
+            return null;
+        }
     }
-} else {
-    console.warn('Speech recognition not supported in this browser.');
-    notesMicBtn.style.display = 'none';
-    notesTextarea.placeholder = "Speech recognition is not supported in your browser.";
-}
 
+    function stopSpeechRecognition() {
+        if (activeRecognition) {
+            activeRecognition.stop();
+            console.log('Speech recognition stopped manually.');
+        } else if (activeMicButton) {
+            activeMicButton.classList.remove('pulsing');
+        }
+        activeRecognition = null;
+        activeMicButton = null;
+    }
 
-    // --- Data Fetching and Display ---
+    if (SpeechRecognition) {
+        notesRecognition = setupSpeechRecognitionInstance(notesTextarea, notesMicBtn);
+        if (notesRecognition) {
+            notesMicBtn.addEventListener('click', () => {
+                if (activeRecognition === notesRecognition) {
+                    stopSpeechRecognition();
+                    notesMicBtn.classList.remove('pulsing');
+                } else {
+                    stopSpeechRecognition();
+                    try {
+                        notesRecognition.start();
+                        notesMicBtn.classList.add('pulsing');
+                    } catch (e) {
+                        console.error("Error starting speech recognition:", e);
+                        alert("Could not start speech recognition. Please ensure your microphone is enabled.");
+                    }
+                }
+            });
+        }
+    } else {
+        console.warn('Speech recognition not supported in this browser.');
+        notesMicBtn.style.display = 'none';
+        notesTextarea.placeholder = "Speech recognition is not supported in your browser.";
+    }
+
     let allItems = [];
     const unsubscribe = db.collection('pictures')
         .orderBy('timestamp', 'desc')
@@ -458,6 +434,7 @@ if (SpeechRecognition) {
                     ...doc.data(),
                     timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : null
                 }));
+                console.log("Fetched items:", allItems); // Debug data
                 displayItems();
             },
             (error) => {
@@ -469,7 +446,6 @@ if (SpeechRecognition) {
     function displayItems() {
         const searchTerm = searchBar.value.toLowerCase().trim();
 
-        // Separate pinned and unpinned items
         const pinnedItems = allItems.filter(item => item.pinned).sort((a, b) => b.timestamp - a.timestamp);
         const unpinnedItems = allItems.filter(item => !item.pinned).sort((a, b) => b.timestamp - a.timestamp);
 
@@ -485,7 +461,7 @@ if (SpeechRecognition) {
             return notes.includes(searchTerm) || timestampString.includes(searchTerm);
         });
 
-        itemsList.innerHTML = ''; // Clear previous items
+        itemsList.innerHTML = '';
 
         if (allItems.length === 0 && loadingMessage.style.display === 'none') {
             itemsList.innerHTML = '<p class="text-center text-gray-500">No items saved yet.</p>';
@@ -493,10 +469,7 @@ if (SpeechRecognition) {
             itemsList.innerHTML = '<p class="text-center text-gray-500">No items match your search.</p>';
         }
 
-        // Render pinned items
         filteredPinnedItems.forEach(item => renderItem(item, true));
-
-        // Render unpinned items
         filteredUnpinnedItems.forEach(item => renderItem(item, false));
     }
 
@@ -513,7 +486,7 @@ if (SpeechRecognition) {
         }
 
         const timestampStr = item.timestamp ? item.timestamp.toLocaleString() : 'Unknown time';
-        const notesPreview = escapeHtml(item.notes || 'No notes'); // Ensure fallback to 'No notes'
+        const notesPreview = item.notes ? escapeHtml(item.notes) : 'No notes'; // Fixed undefined issue
 
         itemElement.innerHTML = `
             <div class="item-actions">
@@ -552,9 +525,11 @@ if (SpeechRecognition) {
             const itemId = pinButton.closest('.item-card')?.dataset.id;
             if (itemId) handlePinClick(itemId);
         } else if (editButton) {
+            console.log("Edit button clicked"); // Debug
             const itemId = editButton.closest('.item-card')?.dataset.id;
             if (itemId) handleEditClick(itemId);
         } else if (deleteButton) {
+            console.log("Delete button clicked"); // Debug
             const itemId = deleteButton.closest('.item-card')?.dataset.id;
             if (itemId) handleDeleteClick(itemId);
         } else if (viewTrigger) {
@@ -579,39 +554,25 @@ if (SpeechRecognition) {
         }
     }
 
-    function escapeHtml(unsafe) { /* ... same ... */ }
+    function escapeHtml(unsafe) {
+        if (unsafe === undefined || unsafe === null) return ''; // Fixed undefined handling
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     searchBar.addEventListener('input', displayItems);
-
-
-    // --- Item Click/View Logic ---
-    itemsList.addEventListener('click', (e) => {
-        const editButton = e.target.closest('.edit-btn');
-        const deleteButton = e.target.closest('.delete-btn');
-        const viewTrigger = e.target.closest('.item-content-wrapper'); // Check for view click
-
-        if (editButton) {
-             const itemId = editButton.closest('.item-card')?.dataset.id;
-             if (itemId) handleEditClick(itemId);
-        } else if (deleteButton) {
-             const itemId = deleteButton.closest('.item-card')?.dataset.id;
-             if (itemId) handleDeleteClick(itemId);
-        } else if (viewTrigger) {
-            // Check it wasn't a click on an action button INSIDE the view trigger
-             if (!e.target.closest('.item-actions')) {
-                 const itemId = viewTrigger.dataset.id;
-                 if (itemId) handleViewClick(itemId);
-            }
-        }
-    });
 
     function handleViewClick(itemId) {
         const itemToView = allItems.find(item => item.id === itemId);
         if (!itemToView) return;
 
-        // Populate Modal
-        modalNotesContent.innerHTML = escapeHtml(itemToView.notes || "").replace(/\n/g, '<br>'); // Preserve line breaks
+        modalNotesContent.innerHTML = escapeHtml(itemToView.notes || "").replace(/\n/g, '<br>');
 
-        modalImageContainer.innerHTML = ''; // Clear previous images
+        modalImageContainer.innerHTML = '';
         if (Array.isArray(itemToView.pictureUrls) && itemToView.pictureUrls.length > 0) {
             itemToView.pictureUrls.forEach(url => {
                 const img = document.createElement('img');
@@ -622,14 +583,11 @@ if (SpeechRecognition) {
             });
         }
 
-        // Show Modal
         viewModalOverlay.classList.add('active');
     }
 
-    // Close Modal Logic
     viewModalCloseBtn.addEventListener('click', closeViewModal);
     viewModalOverlay.addEventListener('click', (e) => {
-        // Close if clicked on overlay itself, not content inside
         if (e.target === viewModalOverlay) {
             closeViewModal();
         }
@@ -637,21 +595,74 @@ if (SpeechRecognition) {
 
     function closeViewModal() {
         viewModalOverlay.classList.remove('active');
-        // Optional: Clear content after fade out
-        // setTimeout(() => {
-        //    modalNotesContent.innerHTML = '';
-        //    modalImageContainer.innerHTML = '';
-        // }, 300); // Match transition duration
     }
 
-    // --- Edit and Delete Logic ---
-    function handleEditClick(itemId) { /* ... same edit logic ... */ }
-    async function handleDeleteClick(itemId) { /* ... same delete logic ... */ }
-    function showSpinner(message = 'Processing...') { /* ... */ }
-    function hideSpinner() { /* ... */ }
+    function handleEditClick(itemId) {
+        const itemToEdit = allItems.find(item => item.id === itemId);
+        if (!itemToEdit) return;
 
+        resetForm(false);
+        editItemIdInput.value = itemId;
+        entryModeInput.value = 'edit';
+        notesTextarea.value = itemToEdit.notes || '';
 
-    // --- Form Submission (Save/Update) ---
+        if (Array.isArray(itemToEdit.pictureUrls) && itemToEdit.pictureUrls.length > 0) {
+            picturesFormField.classList.remove('hidden');
+            picturesLabel.textContent = 'Pictures (Optional):';
+            fileHelper.textContent = 'Upload new images to replace existing ones (optional).';
+            itemToEdit.pictureUrls.forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Existing Image';
+                img.className = 'item-img';
+                existingImagesDiv.appendChild(img);
+            });
+            picturesInput.disabled = false;
+        } else {
+            picturesFormField.classList.add('hidden');
+        }
+
+        submitButton.textContent = 'Update';
+        contentFormWrapper.style.display = 'block';
+        inputTrigger.style.display = 'none';
+        notesTextarea.focus();
+    }
+
+    async function handleDeleteClick(itemId) {
+        if (!confirm('Are you sure you want to delete this item?')) return;
+
+        showSpinner('Deleting...');
+        try {
+            const item = allItems.find(item => item.id === itemId);
+            if (item && Array.isArray(item.pictureUrls)) {
+                const deletePromises = item.pictureUrls.map(url => {
+                    const fileRef = storage.refFromURL(url);
+                    return fileRef.delete().catch(error => {
+                        console.error('Error deleting file:', error);
+                    });
+                });
+                await Promise.all(deletePromises);
+            }
+
+            await db.collection('pictures').doc(itemId).delete();
+            setStatusMessage('Item deleted successfully!', true);
+        } catch (error) {
+            console.error('Error deleting item:', error);
+            setStatusMessage('Failed to delete item.', false);
+        } finally {
+            hideSpinner();
+        }
+    }
+
+    function showSpinner(message = 'Processing...') {
+        spinner.style.display = 'block';
+        setStatusMessage(message, false);
+    }
+
+    function hideSpinner() {
+        spinner.style.display = 'none';
+    }
+
     contentForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         stopSpeechRecognition();
@@ -738,7 +749,7 @@ if (SpeechRecognition) {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     pinned: false
                 });
-                setStatusMessage('Saved successfully!', true);
+                setStatusMessage("Saved in Ami's Mind", true); // Updated success message
             }
             setTimeout(closeForm, 1500);
         } catch (error) {
@@ -754,11 +765,7 @@ if (SpeechRecognition) {
             }
         }
     });
-
-    // Generic Error Handler
-    function handleError(error, specificContext = "An operation failed.") { /* ... same ... */ }
-
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92717fed1cb5e5f0',t:'MTc0MzEwNTg5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
 </xaiArtifact>
