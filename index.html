@@ -21,12 +21,41 @@
         .trigger-card { margin-top: 0; } /* Reduce top margin for trigger */
 
         /* Input Trigger Styles */
-        #inputTrigger { display: flex; align-items: center; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); cursor: pointer; background-color: white; transition: box-shadow 0.2s ease; }
-        #inputTrigger:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        #inputTrigger span { color: #6b7280; flex-grow: 1; }
-        #inputTrigger .icon-group { display: flex; align-items: center; margin-left: auto; }
-        #inputTrigger .icon { margin-left: 18px; color: #4b5563; width: 22px; height: 22px; flex-shrink: 0; transition: color 0.2s ease; }
-        #inputTrigger .icon:hover { color: #10b981; }
+        #inputTrigger {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            background-color: white;
+            transition: box-shadow 0.2s ease;
+        }
+        #inputTrigger:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        #inputTrigger span {
+            color: #6b7280;
+            margin-right: 16px; /* Add spacing between text and icons */
+            font-size: 1.25rem; /* Slightly larger text */
+        }
+        #inputTrigger .icon-group {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Add spacing between icons */
+        }
+        #inputTrigger .icon {
+            color: #4b5563;
+            width: 40px; /* Larger icon size */
+            height: 40px; /* Larger icon size */
+            flex-shrink: 0;
+            transition: color 0.2s ease;
+        }
+        #inputTrigger .icon:hover {
+            color: #10b981;
+        }
 
         /* Form Styles */
         #contentFormWrapper { display: none; }
@@ -64,11 +93,17 @@
            -webkit-box-orient: vertical; text-overflow: ellipsis;
         }
         .item-timestamp { font-size: 0.75em; color: #6b7280; text-align: right; margin-top: 10px; }
-        .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 10;} /* Ensure actions on top */
+        .item-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; background: rgba(255,255,255,0.8); padding: 3px; border-radius: 5px; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 10;} /* Ensure actions on top */
         .item-card:hover .item-actions { opacity: 1; }
         .item-actions button { background: none; border: none; padding: 4px; cursor: pointer; color: #4b5563; }
         .item-actions button:hover { color: #1f2937; }
         .item-actions svg { width: 18px; height: 18px; }
+        .item-actions .pin-btn {
+            color: #f59e0b; /* Amber-500 */
+        }
+        .item-actions .pin-btn:hover {
+            color: #d97706; /* Amber-600 */
+        }
 
         /* Form Input Styles */
         label { font-weight: 600; margin-bottom: 4px; display: block; font-size: 0.875rem; color: #374151; }
@@ -95,6 +130,16 @@
         /* Hide elements */
         .hidden { display: none; }
 
+        #itemsList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 15px; /* Spacing between grid items */
+        }
+        .item-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -190,8 +235,10 @@
   appId: "1:759504870947:web:4036e4989edd10a7dcdb96",
   measurementId: "G-EZFTKMB4Z6"
 };
+
     // Initialize Firebase
-    try {
+   // Initialize Firebase
+   try {
     firebase.initializeApp(firebaseConfig);
 } catch (e) {
     console.error("Firebase initialization error:", e);
@@ -311,75 +358,225 @@
     let notesRecognition = null; /* ... */
     let activeRecognition = null; /* ... */
     let activeMicButton = null; /* ... */
-    function setupSpeechRecognitionInstance(textarea, micButton) { /* ... same setup logic ... */ }
-    function stopSpeechRecognition() { /* ... same stop logic ... */ }
-    if (SpeechRecognition) { /* ... same listeners for notesMicBtn ... */ }
-    else { /* ... handle no speech support ... */ }
+    function setupSpeechRecognitionInstance(textarea, micButton) {
+    try {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+
+        recognition.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    transcript += event.results[i][0].transcript;
+                }
+            }
+            textarea.value += (textarea.value.length > 0 ? ' ' : '') + transcript.trim();
+            console.log('Speech recognition result:', transcript);
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+            alert(`Speech recognition error: ${event.error}. Please try again.`);
+            stopSpeechRecognition();
+        };
+
+        recognition.onstart = () => {
+            console.log('Speech recognition started.');
+            micButton.classList.add('pulsing');
+            activeRecognition = recognition;
+            activeMicButton = micButton;
+        };
+
+        recognition.onend = () => {
+            console.log('Speech recognition stopped.');
+            if (activeRecognition === recognition) {
+                micButton.classList.remove('pulsing');
+                activeRecognition = null;
+                activeMicButton = null;
+            }
+        };
+
+        return recognition;
+    } catch (error) {
+        console.error('Error initializing SpeechRecognition:', error);
+        alert('Speech recognition is not supported in your browser.');
+        micButton.style.display = 'none';
+        textarea.placeholder = "Speech recognition is not supported in your browser.";
+        return null;
+    }
+}
+
+function stopSpeechRecognition() {
+    if (activeRecognition) {
+        activeRecognition.stop();
+        console.log('Speech recognition stopped manually.');
+    } else if (activeMicButton) {
+        activeMicButton.classList.remove('pulsing');
+    }
+    activeRecognition = null;
+    activeMicButton = null;
+}
+
+if (SpeechRecognition) {
+    notesRecognition = setupSpeechRecognitionInstance(notesTextarea, notesMicBtn);
+    if (notesRecognition) {
+        notesMicBtn.addEventListener('click', () => {
+            if (activeRecognition === notesRecognition) {
+                // Stop listening and stop pulsating
+                stopSpeechRecognition();
+                notesMicBtn.classList.remove('pulsing');
+            } else {
+                // Start listening and start pulsating
+                stopSpeechRecognition();
+                try {
+                    notesRecognition.start();
+                    notesMicBtn.classList.add('pulsing');
+                } catch (e) {
+                    console.error("Error starting speech recognition:", e);
+                    alert("Could not start speech recognition. Please ensure your microphone is enabled.");
+                }
+            }
+        });
+    }
+} else {
+    console.warn('Speech recognition not supported in this browser.');
+    notesMicBtn.style.display = 'none';
+    notesTextarea.placeholder = "Speech recognition is not supported in your browser.";
+}
 
 
     // --- Data Fetching and Display ---
     let allItems = [];
     const unsubscribe = db.collection('pictures')
         .orderBy('timestamp', 'desc')
-        .onSnapshot((snapshot) => {
-            loadingMessage.style.display = 'none';
-            allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            displayItems();
-        }, (error) => { /* ... error handling ... */ });
+        .onSnapshot(
+            (snapshot) => {
+                loadingMessage.style.display = 'none';
+                allItems = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : null
+                }));
+                displayItems();
+            },
+            (error) => {
+                console.error("Error fetching items from Firestore:", error);
+                loadingMessage.textContent = "Failed to load items. Please try again later.";
+            }
+        );
 
     function displayItems() {
         const searchTerm = searchBar.value.toLowerCase().trim();
-        const filteredItems = allItems.filter(item => { /* ... same filter logic (notes, timestamp) ... */ });
+
+        // Separate pinned and unpinned items
+        const pinnedItems = allItems.filter(item => item.pinned).sort((a, b) => b.timestamp - a.timestamp);
+        const unpinnedItems = allItems.filter(item => !item.pinned).sort((a, b) => b.timestamp - a.timestamp);
+
+        const filteredPinnedItems = pinnedItems.filter(item => {
+            const notes = (item.notes || '').toLowerCase();
+            const timestampString = item.timestamp ? item.timestamp.toLocaleString() : '';
+            return notes.includes(searchTerm) || timestampString.includes(searchTerm);
+        });
+
+        const filteredUnpinnedItems = unpinnedItems.filter(item => {
+            const notes = (item.notes || '').toLowerCase();
+            const timestampString = item.timestamp ? item.timestamp.toLocaleString() : '';
+            return notes.includes(searchTerm) || timestampString.includes(searchTerm);
+        });
 
         itemsList.innerHTML = ''; // Clear previous items
 
-        if (allItems.length === 0 && loadingMessage.style.display === 'none') { /* ... no items message ... */ }
-        else if (filteredItems.length === 0 && allItems.length > 0) { /* ... no search results message ... */ }
+        if (allItems.length === 0 && loadingMessage.style.display === 'none') {
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items saved yet.</p>';
+        } else if (filteredPinnedItems.length === 0 && filteredUnpinnedItems.length === 0) {
+            itemsList.innerHTML = '<p class="text-center text-gray-500">No items match your search.</p>';
+        }
 
-        filteredItems.forEach((item) => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'item-card';
-            itemElement.setAttribute('data-id', item.id); // Keep ID on card
+        // Render pinned items
+        filteredPinnedItems.forEach(item => renderItem(item, true));
 
-            let imagesHtmlPreview = '';
-            // Show only the FIRST image as a small preview if it exists
-            if (Array.isArray(item.pictureUrls) && item.pictureUrls.length > 0) {
-                imagesHtmlPreview = `<div class="item-img-container">
-                                       <img src="${item.pictureUrls[0]}" alt="Preview" class="item-img">
-                                     </div>`;
+        // Render unpinned items
+        filteredUnpinnedItems.forEach(item => renderItem(item, false));
+    }
+
+    function renderItem(item, isPinned) {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item-card';
+        itemElement.setAttribute('data-id', item.id);
+
+        let imagesHtmlPreview = '';
+        if (Array.isArray(item.pictureUrls) && item.pictureUrls.length > 0) {
+            imagesHtmlPreview = `<div class="item-img-container">
+                                   <img src="${item.pictureUrls[0]}" alt="Preview" class="item-img">
+                                 </div>`;
+        }
+
+        const timestampStr = item.timestamp ? item.timestamp.toLocaleString() : 'Unknown time';
+        const notesPreview = escapeHtml(item.notes || 'No notes'); // Ensure fallback to 'No notes'
+
+        itemElement.innerHTML = `
+            <div class="item-actions">
+                <button class="pin-btn" title="${isPinned ? 'Unpin Item' : 'Pin Item'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isPinned ? 'M5 15l7-7 7 7' : 'M12 19V6m0 0l-7 7m7-7l7 7'}" />
+                    </svg>
+                </button>
+                <button class="edit-btn" title="Edit Item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                </button>
+                <button class="delete-btn" title="Delete Item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+            </div>
+            <div class="item-content-wrapper" data-id="${item.id}">
+                ${imagesHtmlPreview}
+                <p class="item-notes-preview">${notesPreview}</p>
+                <p class="item-timestamp">${timestampStr}</p>
+            </div>
+        `;
+        itemsList.appendChild(itemElement);
+    }
+
+    itemsList.addEventListener('click', (e) => {
+        const pinButton = e.target.closest('.pin-btn');
+        const editButton = e.target.closest('.edit-btn');
+        const deleteButton = e.target.closest('.delete-btn');
+        const viewTrigger = e.target.closest('.item-content-wrapper');
+
+        if (pinButton) {
+            const itemId = pinButton.closest('.item-card')?.dataset.id;
+            if (itemId) handlePinClick(itemId);
+        } else if (editButton) {
+            const itemId = editButton.closest('.item-card')?.dataset.id;
+            if (itemId) handleEditClick(itemId);
+        } else if (deleteButton) {
+            const itemId = deleteButton.closest('.item-card')?.dataset.id;
+            if (itemId) handleDeleteClick(itemId);
+        } else if (viewTrigger) {
+            if (!e.target.closest('.item-actions')) {
+                const itemId = viewTrigger.dataset.id;
+                if (itemId) handleViewClick(itemId);
             }
+        }
+    });
 
-            const timestampStr = item.timestamp?.toDate ? new Date(item.timestamp.toDate()).toLocaleString() : 'Unknown time';
+    async function handlePinClick(itemId) {
+        try {
+            const item = allItems.find(item => item.id === itemId);
+            if (!item) return;
 
-            // Get notes, provide default, and create preview
-            const fullNotes = item.notes || ""; // Default to empty string if notes undefined/null
-            let notesPreview = escapeHtml(fullNotes);
-             if (notesPreview.length > NOTE_PREVIEW_LENGTH) {
-                notesPreview = notesPreview.substring(0, NOTE_PREVIEW_LENGTH) + "...";
-            }
-            // Use placeholder if notes are truly empty after trimming
-            if (fullNotes.trim() === "") {
-                notesPreview = '<i class="text-gray-400">No note content...</i>';
-            }
-
-
-            itemElement.innerHTML = `
-                <div class="item-actions">
-                    <button class="edit-btn" title="Edit Item">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                    <button class="delete-btn" title="Delete Item">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                </div>
-                <div class="item-content-wrapper" data-id="${item.id}"> <!-- Wrapper for click listener -->
-                    ${imagesHtmlPreview}
-                    <p class="item-notes-preview">${notesPreview}</p>
-                    <p class="item-timestamp">${timestampStr}</p>
-                </div>
-            `;
-            itemsList.appendChild(itemElement);
-        });
+            const newPinnedStatus = !item.pinned;
+            await db.collection('pictures').doc(itemId).update({ pinned: newPinnedStatus });
+            setStatusMessage(newPinnedStatus ? 'Item pinned!' : 'Item unpinned!', true);
+        } catch (error) {
+            console.error('Error updating pin status:', error);
+            setStatusMessage('Failed to update pin status.', false);
+        }
     }
 
     function escapeHtml(unsafe) { /* ... same ... */ }
@@ -455,7 +652,108 @@
 
 
     // --- Form Submission (Save/Update) ---
-    contentForm.addEventListener('submit', async function(e) { /* ... same submit logic (validation depends on mode) ... */ });
+    contentForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        stopSpeechRecognition();
+
+        const editingItemId = editItemIdInput.value;
+        const isEditing = !!editingItemId;
+        const notes = notesTextarea.value.trim();
+        const files = picturesInput.files;
+
+        fileError.textContent = '';
+        notesError.textContent = '';
+        setStatusMessage('', false);
+
+        let isValid = true;
+        let pictureUrls = [];
+        let hasFilesToUpload = files.length > 0;
+
+        if (!notes) {
+            notesError.textContent = 'Please enter some notes.';
+            isValid = false;
+        }
+
+        if (!isEditing && hasFilesToUpload) {
+            for (let file of files) {
+                if (!file.type.startsWith('image/')) {
+                    fileError.textContent = 'Please upload image files only.';
+                    isValid = false;
+                    break;
+                }
+                if (file.size > MAX_FILE_SIZE_BYTES) {
+                    fileError.textContent = `Each file must be less than ${MAX_FILE_SIZE_MB} MB.`;
+                    isValid = false;
+                    break;
+                }
+            }
+        } else if (isEditing) {
+            const currentItem = allItems.find(item => item.id === editingItemId);
+            pictureUrls = currentItem?.pictureUrls || [];
+            hasFilesToUpload = false;
+        }
+
+        if (!isValid) return;
+
+        showSpinner(isEditing ? 'Updating...' : 'Saving...');
+        submitButton.disabled = true;
+        cancelButton.disabled = true;
+
+        try {
+            if (!isEditing && hasFilesToUpload) {
+                setStatusMessage('Uploading pictures...', false);
+                const uploadPromises = Array.from(files).map(file => {
+                    const filePath = `pictures/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                    const storageRef = storage.ref(filePath);
+                    const uploadTask = storageRef.put(file);
+                    return new Promise((resolve, reject) => {
+                        uploadTask.on(
+                            'state_changed',
+                            (snapshot) => {
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                setStatusMessage(`Uploading ${file.name}: ${Math.round(progress)}%`, false);
+                            },
+                            reject,
+                            async () => {
+                                try {
+                                    resolve(await uploadTask.snapshot.ref.getDownloadURL());
+                                } catch (urlError) {
+                                    reject(urlError);
+                                }
+                            }
+                        );
+                    });
+                });
+                pictureUrls = await Promise.all(uploadPromises);
+            }
+
+            setStatusMessage(isEditing ? 'Updating data...' : 'Saving data...', false);
+            if (isEditing) {
+                await db.collection('pictures').doc(editingItemId).update({ notes: notes });
+                setStatusMessage('Updated successfully!', true);
+            } else {
+                await db.collection('pictures').add({
+                    notes: notes,
+                    pictureUrls: pictureUrls,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    pinned: false
+                });
+                setStatusMessage('Saved successfully!', true);
+            }
+            setTimeout(closeForm, 1500);
+        } catch (error) {
+            console.error('Error saving/updating item:', error);
+            setStatusMessage(`Failed to ${isEditing ? 'update' : 'save'} item.`, false);
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
+        } finally {
+            hideSpinner();
+            if (!statusMessage.classList.contains('success')) {
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
+            }
+        }
+    });
 
     // Generic Error Handler
     function handleError(error, specificContext = "An operation failed.") { /* ... same ... */ }
