@@ -18,9 +18,89 @@ try {
 }
 const db = firebase.firestore();
 const storage = firebase.storage(); 
+const auth = firebase.auth();
+
 const MAX_FILE_SIZE_MB = 10;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const NOTE_PREVIEW_LENGTH = 150;
+// Restrict to your personal email (replace with your email)
+const ALLOWED_EMAIL = "amaryedida@gmail.com"; // Replace with your actual email
+// Authentication UI
+const authContainer = document.createElement('div');
+authContainer.id = 'authContainer';
+authContainer.innerHTML =     <div class="card">         <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Sign In</h2>         <form id="authForm">             <div class="form-field">                 <label for="email">Email:</label>                 <input type="email" id="email" value="${ALLOWED_EMAIL}" readonly class="border p-2 w-full rounded-md bg-gray-100">             </div>             <div class="form-field">                 <label for="password">Password:</label>                 <input type="password" id="password" required class="border p-2 w-full rounded-md">             </div>             <p id="authError" class="error"></p>             <div class="flex justify-end gap-3 mt-4">                 <button type="submit" id="signInBtn" class="btn">Sign In</button>             </div>         </form>     </div>;
+document.body.insertBefore(authContainer, document.body.firstChild);
+
+// Sign-out button
+const signOutButton = document.createElement('button');
+signOutButton.id = 'signOutBtn';
+signOutButton.className = 'btn btn-secondary';
+signOutButton.textContent = 'Sign Out';
+signOutButton.style.display = 'none';
+signOutButton.style.position = 'fixed';
+signOutButton.style.top = '10px';
+signOutButton.style.right = '10px';
+document.body.appendChild(signOutButton);
+
+// Hide main app content initially
+const appContent = document.querySelector('h1.app-heading').parentElement;
+appContent.style.display = 'none';
+
+// Authentication Logic
+const authForm = document.getElementById('authForm');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const signInBtn = document.getElementById('signInBtn');
+const authError = document.getElementById('authError');
+
+auth.onAuthStateChanged(user => {
+    if (user && user.email === ALLOWED_EMAIL) {
+        // User is signed in with the allowed email, show app content
+        authContainer.style.display = 'none';
+        appContent.style.display = 'block';
+        signOutButton.style.display = 'block';
+    } else {
+        // No user or incorrect email, show sign-in form
+        authContainer.style.display = 'block';
+        appContent.style.display = 'none';
+        signOutButton.style.display = 'none';
+        if (user) {
+            // If a different email is signed in, sign them out
+            auth.signOut();
+            authError.textContent = 'Access restricted to authorized email only.';
+        }
+    }
+});
+
+authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    if (email !== ALLOWED_EMAIL) {
+        authError.textContent = 'Access restricted to authorized email only.';
+        return;
+    }
+    try {
+        signInBtn.disabled = true;
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+        authError.textContent = error.message;
+    } finally {
+        signInBtn.disabled = false;
+    }
+});
+
+signOutButton.addEventListener('click', async () => {
+    try {
+        await auth.signOut();
+    } catch (error) {
+        authError.textContent = 'Error signing out: ' + error.message;
+    }
+});
+
+ 
+
+
 
 // DOM Elements
 const inputTrigger = document.getElementById('inputTrigger');
