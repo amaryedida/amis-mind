@@ -28,7 +28,25 @@ const ALLOWED_EMAIL = "amaryedida@gmail.com"; // Replace with your actual email
 // Authentication UI
 const authContainer = document.createElement('div');
 authContainer.id = 'authContainer';
-authContainer.innerHTML =     <div class="card">         <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Sign In</h2>         <form id="authForm">             <div class="form-field">                 <label for="email">Email:</label>                 <input type="email" id="email" value="${ALLOWED_EMAIL}" readonly class="border p-2 w-full rounded-md bg-gray-100">             </div>             <div class="form-field">                 <label for="password">Password:</label>                 <input type="password" id="password" required class="border p-2 w-full rounded-md">             </div>             <p id="authError" class="error"></p>             <div class="flex justify-end gap-3 mt-4">                 <button type="submit" id="signInBtn" class="btn">Sign In</button>             </div>         </form>     </div>;
+authContainer.innerHTML = `
+    <div class="card">
+        <h2 class="text-xl font-bold text-center mb-5 text-gray-700">Sign In</h2>
+        <form id="authForm">
+            <div class="form-field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="${ALLOWED_EMAIL}" readonly class="border p-2 w-full rounded-md bg-gray-100">
+            </div>
+            <div class="form-field">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required class="border p-2 w-full rounded-md">
+            </div>
+            <p id="authError" class="error"></p>
+            <div class="flex justify-end gap-3 mt-4">
+                <button type="submit" id="signInBtn" class="btn">Sign In</button>
+            </div>
+        </form>
+    </div>
+`;
 document.body.insertBefore(authContainer, document.body.firstChild);
 
 // Sign-out button
