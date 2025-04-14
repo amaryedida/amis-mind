@@ -49,16 +49,41 @@ authContainer.innerHTML = `
 `;
 document.body.insertBefore(authContainer, document.body.firstChild);
 
+// Hamburger menu container
+const hamburgerMenu = document.createElement('div');
+hamburgerMenu.className = 'hamburger-menu';
+hamburgerMenu.innerHTML = 
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+;
+hamburgerMenu.style.position = 'fixed';
+hamburgerMenu.style.top = '10px';
+hamburgerMenu.style.right = '10px';
+document.body.appendChild(hamburgerMenu);
+
+// Sign-out option container
+const signoutOption = document.createElement('div');
+signoutOption.className = 'signout-option hidden';
+signoutOption.style.position = 'fixed';
+signoutOption.style.top = '45px'; // Adjust position below the hamburger
+signoutOption.style.right = '10px';
+document.body.appendChild(signoutOption);
+
 // Sign-out button
 const signOutButton = document.createElement('button');
 signOutButton.id = 'signOutBtn';
 signOutButton.className = 'btn btn-secondary';
 signOutButton.textContent = 'Sign Out';
-signOutButton.style.display = 'none';
-signOutButton.style.position = 'fixed';
-signOutButton.style.top = '10px';
-signOutButton.style.right = '10px';
-document.body.appendChild(signOutButton);
+signoutOption.appendChild(signOutButton);
+
+// Initially hide the sign-out option
+signoutOption.style.display = 'none';
+
+// Event listener for the hamburger menu
+hamburgerMenu.addEventListener('click', () => {
+  signoutOption.classList.toggle('hidden');
+});
 
 // Hide main app content initially
 const appContent = document.querySelector('h1.app-heading').parentElement;
