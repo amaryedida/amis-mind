@@ -50,21 +50,6 @@ authContainer.innerHTML = `
     </div>
 `;
 document.body.insertBefore(authContainer, document.body.firstChild);
-
-// Hamburger menu container
-const hamburgerMenu = document.createElement('div');
-hamburgerMenu.className = 'hamburger-menu';
-hamburgerMenu.innerHTML = `  
-  <div class="bar"></div>
-  <div class="bar"></div>
-  <div class="bar"></div>
-`;
-hamburgerMenu.style.position = 'fixed';
-hamburgerMenu.style.top = '10px';
-hamburgerMenu.style.right = '10px';
-document.body.appendChild(hamburgerMenu);
-
-// Sign-out option container
 const signoutOption = document.createElement('div');
 signoutOption.className = 'signout-option hidden';
 signoutOption.style.position = 'fixed';
@@ -78,11 +63,6 @@ signOutButton.id = 'signOutBtn';
 signOutButton.className = 'btn btn-secondary';
 signOutButton.textContent = 'Sign Out';
 signoutOption.appendChild(signOutButton);
-
-// Event listener for the hamburger menu
-hamburgerMenu.addEventListener('click', () => {
-  signoutOption.classList.toggle('hidden');
-});
 
 // Hide main app content initially
 const appContent = document.querySelector('h1.app-heading').parentElement;
@@ -98,9 +78,41 @@ const authError = document.getElementById('authError');
 auth.onAuthStateChanged(user => {
     if (user && user.email === ALLOWED_EMAIL) {
         // User is signed in with the allowed email, show app content
+
+        // Create and append hamburger menu after successful sign-in
+        const hamburgerMenu = document.createElement('div');
+        hamburgerMenu.className = 'hamburger-menu';
+        hamburgerMenu.innerHTML = `
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        `;
+        hamburgerMenu.style.position = 'fixed';
+        hamburgerMenu.style.top = '10px';
+        hamburgerMenu.style.right = '10px';
+        document.body.appendChild(hamburgerMenu);
+
+        // Sign-out option container (if not already created - defensive programming)
+        if (!document.querySelector('.signout-option')) {
+            const signoutOption = document.createElement('div');
+            signoutOption.className = 'signout-option hidden';
+            signoutOption.style.position = 'fixed';
+            signoutOption.style.top = '45px'; // Adjust position below the hamburger
+            signoutOption.style.right = '10px';
+            document.body.appendChild(signoutOption);
+
+            const signOutButton = document.createElement('button');
+            signOutButton.id = 'signOutBtn';
+            signOutButton.className = 'btn btn-secondary';
+            signOutButton.textContent = 'Sign Out';
+            signoutOption.appendChild(signOutButton);
+        }
+
+        hamburgerMenu.addEventListener('click', () => {
+            signoutOption.classList.toggle('hidden');
+        });
         authContainer.style.display = 'none';
         appContent.style.display = 'block';
-        signOutButton.style.display = 'block';
     } else {
         // No user or incorrect email, show sign-in form
         authContainer.style.display = 'block';
