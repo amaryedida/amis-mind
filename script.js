@@ -1,4 +1,5 @@
 console.log("script.js loaded");
+import imageCompression from 'browser-image-compression';
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -623,7 +624,24 @@ contentForm.addEventListener('submit', async function (e) {
         if (!isEditing && hasFilesToUpload) {
             setStatusMessage('Uploading pictures...', false);
             const uploadPromises = Array.from(files).map(file => {
-                const filePath = `pictures/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                return imageCompression(file, {
+                    maxWidthOrHeight: 800,
+                    quality: 0.7
+                }).then(async function (compressedFile) {
+                    console.log('originalFile instanceof Blob', file instanceof Blob);
+                    console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+                    console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+                    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+                    const filePath = `pictures/${Date.now()}-${compressedFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                    return {compressedFile, filePath}
+                }).then(async ({compressedFile, filePath}) => {
+
+
+
+
+
+
+
                 const storageRef = storage.ref(filePath);
                 const uploadTask = storageRef.put(file);
                 return new Promise((resolve, reject) => {
