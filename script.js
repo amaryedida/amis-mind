@@ -644,7 +644,8 @@ contentForm.addEventListener('submit', async function(e) {
                       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                       setStatusMessage(`Uploading ${compressedFile.name}: ${Math.round(progress)}%`, false);
                     },
-                        reject,
+                    reject,
+                    null,
                         async () => {
                             try {
                                 resolve(await uploadTask.snapshot.ref.getDownloadURL());
