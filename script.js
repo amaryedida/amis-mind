@@ -245,7 +245,7 @@ function resetForm(focusNotes = false) {
     cancelButton.disabled = false;
     spinner.style.display = 'none';
     setStatusMessage('', false);
-    fileError.textContent = '';
+   fileError.textContent = '';
     notesError.textContent = '';
     existingImagesDiv.innerHTML = '';
     picturesInput.value = null;
@@ -276,6 +276,7 @@ function setupSpeechRecognitionInstance(textarea, micButton) {
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = false;
+        recognition.micButton = micButton;
         recognition.onresult = (event) => {
             let transcript = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -317,19 +318,21 @@ function setupSpeechRecognitionInstance(textarea, micButton) {
 
 function stopSpeechRecognition() {
     if (activeRecognition) {
+        if(activeRecognition.micButton){
+            activeRecognition.micButton.removeEventListener('click', activeRecognition.micButton.eventListener);
+        }
         activeRecognition.stop();
         console.log('Speech recognition stopped manually.');
-    } else if (activeMicButton) {
-        activeMicButton.classList.remove('pulsing');
     }
     activeRecognition = null;
+
     activeMicButton = null;
 } 
 
 if (SpeechRecognition) {
     notesRecognition = setupSpeechRecognitionInstance(notesTextarea, notesMicBtn);
     if (notesRecognition) {
-        notesMicBtn.addEventListener('click', () => {
+        function micBtnClickListener() {
             if (activeRecognition === notesRecognition) {
                 stopSpeechRecognition();
                 notesMicBtn.classList.remove('pulsing');
@@ -343,7 +346,11 @@ if (SpeechRecognition) {
                     alert("Could not start speech recognition. Please ensure your microphone is enabled.");
                 }
             }
-        });
+        }
+        notesMicBtn.addEventListener('click', micBtnClickListener);
+
+            notesRecognition.micButton.eventListener = micBtnClickListener;
+        
     }
 } else {
     console.warn('Speech recognition not supported in this browser.');
@@ -466,7 +473,7 @@ async function handlePinClick(itemId) {
         if (!item) return;
         const newPinnedStatus = !item.pinned;
         await db.collection('pictures').doc(itemId).update({ pinned: newPinnedStatus });
-        setStatusMessage(newPinnedStatus ? 'Item pinned!' : 'Item unpinned!', true);
+        setStatusMessage(newPinnedStatus ? 'Item pinned!' : 'Item unpinned!', true); 
     } catch (error) {
         console.error('Error updating pin status:', error);
         setStatusMessage('Failed to update pin status.', false);
@@ -659,7 +666,9 @@ contentForm.addEventListener('submit', async function(e) {
                 console.error('Error during image compression:', error);
                 throw error; // Re-throw the error to be caught by Promise.all
               }
+            });
             pictureUrls = await Promise.all(uploadPromises);
+        } catch (error) {
         }
 
         setStatusMessage(isEditing ? 'Updating data...' : 'Saving data...', false);
@@ -670,7 +679,7 @@ contentForm.addEventListener('submit', async function(e) {
             await db.collection('pictures').add({
                 notes: notes,
                 pictureUrls: pictureUrls,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 pinned: false
             });
             setStatusMessage("Saved in Ami's Mind", true);
@@ -688,4 +697,3 @@ contentForm.addEventListener('submit', async function(e) {
             cancelButton.disabled = false;
         }
     }
-});
