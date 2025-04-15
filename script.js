@@ -575,7 +575,7 @@ function hideSpinner() {
 }
 
 // Form Submission
-contentForm.addEventListener('submit', async function (e) {
+contentForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     stopSpeechRecognition();
     const editingItemId = editItemIdInput.value;
@@ -621,35 +621,29 @@ contentForm.addEventListener('submit', async function (e) {
 
     try {
         if (!isEditing && hasFilesToUpload) {
-            setStatusMessage('Uploading pictures...', false);
-            const uploadPromises = Array.from(files).map(file => {
-                return imageCompression(file, {
-                    maxWidthOrHeight: 800,
-                    quality: 0.7
-                }).then(async function (compressedFile) {
-                    console.log('originalFile instanceof Blob', file instanceof Blob);
-                    console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
-                    console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
-                    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
-                    const filePath = `pictures/${Date.now()}-${compressedFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-                    return {compressedFile, filePath}
-                }).then(async ({compressedFile, filePath}) => {
+            setStatusMessage('Compressing and uploading pictures...', false);
+            const uploadPromises = Array.from(files).map(async file => {
+              console.log('originalFile instanceof Blob', file instanceof Blob);
+              console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+              try {
+                const compressedFile = await imageCompression(file, {
+                  maxWidthOrHeight: 800,
+                  quality: 0.7,
+                });
+                console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+                console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
 
-
-
-
-
-
-
+                const filePath = `pictures/${Date.now()}-${compressedFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
                 const storageRef = storage.ref(filePath);
-                const uploadTask = storageRef.put(file);
+                const uploadTask = storageRef.put(compressedFile);
+
                 return new Promise((resolve, reject) => {
-                    uploadTask.on(
-                        'state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setStatusMessage(`Uploading ${file.name}: ${Math.round(progress)}%`, false);
-                        },
+                  uploadTask.on(
+                    'state_changed',
+                    (snapshot) => {
+                      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                      setStatusMessage(`Uploading ${compressedFile.name}: ${Math.round(progress)}%`, false);
+                    },
                         reject,
                         async () => {
                             try {
@@ -659,8 +653,11 @@ contentForm.addEventListener('submit', async function (e) {
                             }
                         }
                     );
-                });
-            });
+                  });
+              } catch (error) {
+                console.error('Error during image compression:', error);
+                throw error; // Re-throw the error to be caught by Promise.all
+              }
             pictureUrls = await Promise.all(uploadPromises);
         }
 
