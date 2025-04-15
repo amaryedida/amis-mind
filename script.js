@@ -54,11 +54,11 @@ document.body.insertBefore(authContainer, document.body.firstChild);
 // Hamburger menu container
 const hamburgerMenu = document.createElement('div');
 hamburgerMenu.className = 'hamburger-menu';
-hamburgerMenu.innerHTML = 
+hamburgerMenu.innerHTML = `  
   <div class="bar"></div>
   <div class="bar"></div>
   <div class="bar"></div>
-;
+`;
 hamburgerMenu.style.position = 'fixed';
 hamburgerMenu.style.top = '10px';
 hamburgerMenu.style.right = '10px';
