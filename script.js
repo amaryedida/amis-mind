@@ -690,10 +690,12 @@ contentForm.addEventListener('submit', async function(e) {
         setStatusMessage(`Failed to ${isEditing ? 'update' : 'save'} item.`, false);
         submitButton.disabled = false;
         cancelButton.disabled = false;
-    } finally {
-        hideSpinner();
-        if (!statusMessage.classList.contains('success')) {
-            submitButton.disabled = false;
-            cancelButton.disabled = false;
-        }
-    }})
+    } finally { // Moved this block inside the try-catch
+      hideSpinner();
+      if (!statusMessage.classList.contains('success')) {
+          submitButton.disabled = false;
+          cancelButton.disabled = false;
+      }
+    }
+});
+
