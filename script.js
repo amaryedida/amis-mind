@@ -667,9 +667,9 @@ contentForm.addEventListener('submit', async function(e) {
                 throw error; // Re-throw the error to be caught by Promise.all
               }
             });
-            pictureUrls = await Promise.all(uploadPromises);
-        } catch (error) {
-        }
+          pictureUrls = await Promise.all(uploadPromises);
+        } 
+
 
         setStatusMessage(isEditing ? 'Updating data...' : 'Saving data...', false);
         if (isEditing) {
