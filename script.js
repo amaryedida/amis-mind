@@ -696,4 +696,4 @@ contentForm.addEventListener('submit', async function(e) {
             submitButton.disabled = false;
             cancelButton.disabled = false;
         }
-    }}
+    }})
