@@ -1,5 +1,4 @@
 console.log("script.js loaded");
-import imageCompression from 'browser-image-compression';
 
 // Firebase Configuration
 const firebaseConfig = {
