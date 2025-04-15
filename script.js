@@ -79,9 +79,6 @@ signOutButton.className = 'btn btn-secondary';
 signOutButton.textContent = 'Sign Out';
 signoutOption.appendChild(signOutButton);
 
-// Initially hide the sign-out option
-signoutOption.style.display = 'none';
-
 // Event listener for the hamburger menu
 hamburgerMenu.addEventListener('click', () => {
   signoutOption.classList.toggle('hidden');
