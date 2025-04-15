@@ -111,6 +111,7 @@ auth.onAuthStateChanged(user => {
         hamburgerMenu.addEventListener('click', () => {
             signoutOption.classList.toggle('hidden');
         });
+
         authContainer.style.display = 'none';
         appContent.style.display = 'block';
     } else {
@@ -149,6 +150,17 @@ signOutButton.addEventListener('click', async () => {
         await auth.signOut();
     } catch (error) {
         authError.textContent = 'Error signing out: ' + error.message;
+    }
+});
+
+// Add a click event listener to the document to hide the sign-out option when clicking outside
+document.addEventListener('click', (event) => {
+    const targetElement = event.target;
+    if (
+        !targetElement.closest('.hamburger-menu') &&
+        !targetElement.closest('.signout-option')
+    ) {
+        signoutOption.classList.add('hidden');
     }
 });
 
