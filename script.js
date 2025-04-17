@@ -504,6 +504,7 @@ function handleViewClick(itemId) {
             img.alt = "Saved Image";
             img.className = "modal-img";
             modalImageContainer.appendChild(img);
+            img.style.maxWidth = '100%'; // Ensure images fit within the modal
         });
     }
     viewModalOverlay.classList.add('active');
